@@ -1,3 +1,5 @@
+# Game by MQ and Platypus
+
 import pygame
 import random
 import asteroid
@@ -165,4 +167,3 @@ while running:
     # swap buffers
     pygame.display.update()
     clock.tick(120)
-

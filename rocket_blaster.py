@@ -35,5 +35,5 @@ class RocketBlaster:
                 self.blasts.remove(blast)
             else:
                 # blast.position_x += blast.acceleration_x
-                blast.position_y += blast.acceleration_y - 2
+                blast.position_y += blast.acceleration_y - 3
                 self.screen.blit(self.blast_image, (blast.position_x, blast.position_y))
