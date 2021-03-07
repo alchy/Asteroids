@@ -36,8 +36,11 @@ rocket_explosion = rocket_explosion.RocketExplosion(screen)
 
 # initialize asteroids
 asteroids = []
+asteroid_explosion_sound = pygame.mixer.Sound('sounds/rocket_explodes.wav')
+asteroid_explosion_sound.set_volume(0.3)
 for i in range(MAX_ASTEROIDS):
     asteroids.append(asteroid.Asteroid(screen))
+
 
 # text features, prerender first text
 FPS_TEXT_COLOUR = (255, 255, 0)
@@ -111,12 +114,11 @@ while running:
         if rocket.check_collision_data_blasts(asteroid_mask, asteroid_x, asteroid_y):
             asteroid.asteroid_hit = True
             game_score += 10
+            asteroid_explosion_sound.play()
             asteroid.initial_inertia()
             # hack (fisrt explosion, then inertia or asteroid off)
             asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
                 asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
-
-
         # -= asteroid =- collides with -= rocket =- (if the rocket is fine)
         if not rocket.explosion:
             asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
@@ -141,7 +143,7 @@ while running:
     # all the time draw stats
     screen.blit(text_info_fps, (8, 8))
     screen.blit(text_info_score, (350, 8))
-    screen.blit(text_info_lives, (700, 8))
+    screen.blit(text_info_lives, (730, 8))
 
     # for every new game this must be reset
     #rocket.explosion = False
