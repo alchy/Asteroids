@@ -1,5 +1,3 @@
-# https://www.youtube.com/watch?v=UZg49z76cLw
-
 import pygame
 import random
 import asteroid
