@@ -25,6 +25,8 @@ class Asteroid:
             self.asteroid_acceleration_x, self.asteroid_acceleration_y = self.initial_inertia()
         self.asteroid_rect.x = int(self.asteroid_position_x)
         self.asteroid_rect.y = int(self.asteroid_position_y)
+        self.asteroid_hit = False
+        self.asteroid_destroyed = False
 
 
     def initial_inertia(self):
@@ -41,7 +43,6 @@ class Asteroid:
         inertia_y = random.uniform(-1.5, +1.5)
         while inertia_y == 0.0:
             inertia_y = random.uniform(-1.5, +1.5)
-
         return(float(initial_x), float(initial_y), \
               float(inertia_x), float(inertia_y))
 

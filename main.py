@@ -6,12 +6,13 @@ import time
 import asteroid
 import rocket
 import rocket_explosion
+import rocket_blaster
 
 # debugging
 DEBUG = False
 
 # initalize parameters
-MAX_ASTEROIDS = 20
+MAX_ASTEROIDS = 10
 
 # initialize pygame
 print(pygame.init())
@@ -45,7 +46,7 @@ text_info_fps = game_font.render('FPS', False, FPS_TEXT_COLOUR)
 # https://wallup.net/outer-space-galaxies-planets/
 background = pygame.image.load('images/outer-1614965066305-5634.jpg')
 background_scroll_in_x = 0
-background_scroll_in_x_amount = -0.2
+background_scroll_in_x_amount = 0 #-0.2
 background_scroll_in_y = 0
 background_scroll_in_y_amount = 0 #0.2
 
@@ -67,6 +68,8 @@ while running:
                 rocket.rocket_thrust_up = True
             if event.key == pygame.K_DOWN:
                 rocket.rocket_thrust_down = True
+            if event.key == pygame.K_SPACE:
+                rocket.rocket_blast = True
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 rocket.rocket_thrust_right = False
@@ -87,10 +90,19 @@ while running:
     background_scroll_in_x += background_scroll_in_x_amount
     background_scroll_in_y += background_scroll_in_y_amount
     rocket.redraw(rocket.explosion)
-    rocket_mask, rocket_x, rocket_y = rocket.get_collision_data()
+    rocket_mask, rocket_x, rocket_y = rocket.get_collision_data_rocket()
 
     for asteroid in asteroids:
         asteroid.redraw()
+        asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
+        if rocket.check_collision_data_blasts(asteroid_mask, asteroid_x, asteroid_y):
+            asteroid.asteroid_hit = True
+            asteroid.initial_inertia()
+            # hack (fisrt explosion, then inertia or asteroid off)
+            asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
+                asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
+            print("HIT!")
+
         if not rocket.explosion:
             asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
             offset_x = rocket_x - asteroid_x
@@ -117,3 +129,4 @@ while running:
     # for every new game this must be reset
     #rocket.explosion = False
     #self.rocket_destroyed = False
+    #self.rocket.rocket_blast = False

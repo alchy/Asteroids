@@ -1,3 +1,5 @@
+MUTE_SOUND = True
+
 import pygame
 
 class RocketExplosion:
@@ -29,6 +31,7 @@ class RocketExplosion:
             self.rocket_explosion_animation_frame_timer += 1
             self.screen.blit(self.rocket_explosion_image[self.rocket_explosion_animation_frame], \
                              (rocket_explosion_x - 16, rocket_explosion_y - 16))
-            if self.rocket_explosion_animation_frame == 0:
-                self.explosion_sound.play()
+            if not MUTE_SOUND:
+                if self.rocket_explosion_animation_frame == 0:
+                    self.explosion_sound.play()
 

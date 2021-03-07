@@ -1,4 +1,5 @@
 import pygame
+import rocket_blaster
 
 class Rocket:
     def __init__(self, screen):
@@ -12,18 +13,21 @@ class Rocket:
         self.rocket_acceleration_step = 0.02
         self.rocket_acceleration_actual_x = 0.0
         self.rocket_acceleration_actual_y = 0.0
-        self.rocket_acceleration_x = 0.05
+        self.rocket_acceleration_x = 0.0
         self.rocket_acceleration_y = 0.0
         self.rocket_thrust_left = False
         self.rocket_thrust_right = False
         self.rocket_thrust_up = False
         self.rocket_thrust_down = False
         self.explosion = False
+        self.rocket_blast = False
+        self.rocket_blaster = rocket_blaster.RocketBlaster(self.screen)
 
+    def get_collision_data_rocket(self):
+        return self.rocket_mask, int(self.rocket_x), int(self.rocket_y)
 
-    def get_collision_data(self):
-        return(self.rocket_mask, int(self.rocket_x), int(self.rocket_y))
-
+    def check_collision_data_blasts(self, object_mask, object_x, object_y):
+        return self.rocket_blaster.check_collision(object_mask, object_x, object_y)
 
     def redraw(self, exploded):
         if self.rocket_thrust_left:
@@ -36,6 +40,13 @@ class Rocket:
         if self.rocket_thrust_down:
             self.rocket_acceleration_actual_y += self.rocket_acceleration_step
         self.rocket_y += self.rocket_acceleration_actual_y
+
+        if self.rocket_blast == True:
+            self.rocket_blast = False
+            if not exploded:
+                print("[d] Fired!")
+                self.rocket_blaster.new_blast(self.rocket_x, self.rocket_y, \
+                                              self.rocket_acceleration_actual_x, self.rocket_acceleration_actual_y)
 
         if self.rocket_x < 0:
             self.rocket_x = 0
@@ -50,5 +61,6 @@ class Rocket:
             self.rocket_y = (600 - 32)
             self.rocket_acceleration_y = 0
 
+        self.rocket_blaster.redraw()
         if not exploded:
             self.screen.blit(self.rocket_image, (self.rocket_x, self.rocket_y))
