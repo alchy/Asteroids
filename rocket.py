@@ -1,12 +1,16 @@
 import pygame
 import rocket_blaster
 
+MUTE_SOUND = False
+
 class Rocket:
     def __init__(self, screen):
         self.screen = screen
         # https://www.flaticon.com/search?search-type=icons&word=arcade+space&license=&color=&stroke=&current_section=&author_id=&pack_id=&family_id=&style_id=&category_id=
         self.rocket_image = pygame.image.load('images/space-invaders.png')
         self.rocket_mask = pygame.mask.from_surface(self.rocket_image)
+        self.rocket_blaster_sound = pygame.mixer.Sound('sounds/blaster_shot.wav')
+        self.rocket_blaster_sound.set_volume(0.5)
         self.rocket_rect = self.rocket_image.get_rect()
         self.rocket_x = 370
         self.rocket_y = 480
@@ -62,6 +66,8 @@ class Rocket:
             self.screen.blit(self.rocket_image, (self.rocket_x, self.rocket_y))
             # fire bullet
             if self.blaster_triggered == True:
+                if not MUTE_SOUND:
+                    self.rocket_blaster_sound.play()
                 self.rocket_blaster.new_blast(self.rocket_x, self.rocket_y, \
                                               self.rocket_acceleration_actual_x, self.rocket_acceleration_actual_y)
                 self.blaster_triggered = False

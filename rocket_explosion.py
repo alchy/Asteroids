@@ -1,6 +1,6 @@
-MUTE_SOUND = True
-
 import pygame
+
+MUTE_SOUND = False
 
 class RocketExplosion:
     def __init__(self, screen):
@@ -10,6 +10,7 @@ class RocketExplosion:
         self.rocket_explosion_image = []
         self.rocket_destroyed = False
         self.explosion_sound = pygame.mixer.Sound('sounds/rocket_explodes.wav')
+        self.explosion_sound.set_volume(0.5)
         for frame in range(1, 13):
             print('[i] Loading explosion: ')
             load_filename = 'images/explosion_animated/rocket_explosion_page_' \
