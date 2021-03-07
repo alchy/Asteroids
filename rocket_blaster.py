@@ -8,7 +8,6 @@ class RocketBlast:
         self.acceleration_y = acceleration_y
         self.ttl = 1024
 
-
 class RocketBlaster:
     def __init__(self, screen):
         self.screen = screen
@@ -38,6 +37,3 @@ class RocketBlaster:
                 # blast.position_x += blast.acceleration_x
                 blast.position_y += blast.acceleration_y - 2
                 self.screen.blit(self.blast_image, (blast.position_x, blast.position_y))
-
-
-

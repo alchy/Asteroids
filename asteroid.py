@@ -1,9 +1,7 @@
 import pygame
 import random
 
-
 DEBUG = False
-
 
 class Asteroid:
     def __init__(self, screen):
@@ -28,7 +26,6 @@ class Asteroid:
         self.asteroid_hit = False
         self.asteroid_destroyed = False
 
-
     def initial_inertia(self):
         # 800x600
         initial_x = random.randint(-200, 1000)
@@ -46,7 +43,6 @@ class Asteroid:
         return(float(initial_x), float(initial_y), \
               float(inertia_x), float(inertia_y))
 
-
     def recalculate_position(self):
         self.asteroid_position_x += self.asteroid_acceleration_x
         self.asteroid_position_y += self.asteroid_acceleration_y
@@ -59,13 +55,9 @@ class Asteroid:
             self.asteroid_position_x, self.asteroid_position_y, \
             self.asteroid_acceleration_x, self.asteroid_acceleration_y = self.initial_inertia()
 
-        #print(self.asteroid_rect.x, self.asteroid_rect.y)
-
-
     def get_collision_data(self):
         return(self.asteroid_mask[self.asteroid_animation_frame], \
                self.asteroid_rect.x, self.asteroid_rect.y, )
-
 
     def redraw(self):
         self.recalculate_position()

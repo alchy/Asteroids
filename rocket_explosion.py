@@ -18,7 +18,6 @@ class RocketExplosion:
             explosion_image_tmp = pygame.image.load(load_filename)
             self.rocket_explosion_image.append(explosion_image_tmp)
 
-
     def redraw(self, rocket_explosion_x, rocket_explosion_y):
         if not self.rocket_destroyed:
             if self.rocket_explosion_animation_frame_timer > 16:
@@ -33,4 +32,3 @@ class RocketExplosion:
             if not MUTE_SOUND:
                 if self.rocket_explosion_animation_frame == 0:
                     self.explosion_sound.play()
-
