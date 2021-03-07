@@ -2,7 +2,6 @@
 
 import pygame
 import random
-import time
 import asteroid
 import rocket
 import rocket_explosion
