@@ -54,11 +54,14 @@ class Rocket:
             self.rocket_y = (600 - 32)
             self.rocket_acceleration_y = 0
 
-    def redraw(self):
-        # redraw rocket and if blaster is triggered, add blast
+    def redraw(self, explosion):
+        # redraw bullets
         self.rocket_blaster.redraw()
-        self.screen.blit(self.rocket_image, (self.rocket_x, self.rocket_y))
-        if self.blaster_triggered == True:
-            self.rocket_blaster.new_blast(self.rocket_x, self.rocket_y, \
-                                          self.rocket_acceleration_actual_x, self.rocket_acceleration_actual_y)
-            self.blaster_triggered = False
+        if not explosion:
+            # redraw rocket
+            self.screen.blit(self.rocket_image, (self.rocket_x, self.rocket_y))
+            # fire bullet
+            if self.blaster_triggered == True:
+                self.rocket_blaster.new_blast(self.rocket_x, self.rocket_y, \
+                                              self.rocket_acceleration_actual_x, self.rocket_acceleration_actual_y)
+                self.blaster_triggered = False

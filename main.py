@@ -19,7 +19,9 @@ print(pygame.mixer.get_init())
 
 # initialize game contents
 game_lives = 3
-game_countdown = 1024
+game_score = 0
+next_game_countdown = 10240
+
 
 # initialize screen
 screen = pygame.display.set_mode((800, 600))
@@ -39,8 +41,11 @@ for i in range(MAX_ASTEROIDS):
 
 # text features, prerender first text
 FPS_TEXT_COLOUR = (255, 255, 0)
-game_font = pygame.font.SysFont('Trebuchet MS', 16)
-text_info_fps = game_font.render('FPS', False, FPS_TEXT_COLOUR)
+game_font_small = pygame.font.SysFont('Trebuchet MS', 16)
+game_font_big = pygame.font.SysFont('Trebuchet MS', 16)
+text_info_fps = game_font_small.render('FPS', False, FPS_TEXT_COLOUR)
+text_info_score = game_font_big.render('FPS', False, FPS_TEXT_COLOUR)
+text_info_lives = game_font_big.render('FPS', False, FPS_TEXT_COLOUR)
 
 # https://wallup.net/outer-space-galaxies-planets/
 background = pygame.image.load('images/outer-1614965066305-5634.jpg')
@@ -94,9 +99,8 @@ while running:
     # update rocket position all the time regardless the damage
     rocket.update_position()
 
-    # redraw rocket
-    if not rocket.explosion:
-        rocket.redraw()
+    # always call this, redraw rocket and bullets according to rocket condition
+    rocket.redraw(rocket.explosion)
 
     # check for asteroids collisions
     rocket_mask, rocket_x, rocket_y = rocket.get_collision_data_rocket()
@@ -106,11 +110,12 @@ while running:
         # -= asteroid =- collides with -= blast =-
         if rocket.check_collision_data_blasts(asteroid_mask, asteroid_x, asteroid_y):
             asteroid.asteroid_hit = True
+            game_score += 10
             asteroid.initial_inertia()
             # hack (fisrt explosion, then inertia or asteroid off)
             asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
                 asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
-            print("HIT!")
+
 
         # -= asteroid =- collides with -= rocket =- (if the rocket is fine)
         if not rocket.explosion:
@@ -127,18 +132,25 @@ while running:
         rocket_explosion.redraw(rocket_x, rocket_y)
 
     # check FPS performance, randomly
-    if random.randint(0, 100) == 0:
+    if random.randint(0, 10) == 0:
         fps = str(int((clock.get_fps())))
-        text_info_fps = game_font.render('FPS:' + fps, False, FPS_TEXT_COLOUR)
+        text_info_fps = game_font_small.render('FPS:' + fps, False, FPS_TEXT_COLOUR)
+        text_info_score = game_font_big.render('SCORE:' + '{:0>5}'.format(str(game_score)), False, FPS_TEXT_COLOUR)
+        text_info_lives = game_font_big.render('LIVES:' + '{:0>2}'.format(str(game_lives)), False, FPS_TEXT_COLOUR)
 
-    # all the time draw the FPS performance
+    # all the time draw stats
     screen.blit(text_info_fps, (8, 8))
-
-    # swap buffers
-    pygame.display.update()
-    clock.tick(120)
+    screen.blit(text_info_score, (350, 8))
+    screen.blit(text_info_lives, (700, 8))
 
     # for every new game this must be reset
     #rocket.explosion = False
     #self.rocket_destroyed = False
     #self.rocket.rocket_blast = False
+    #game_lives = 3
+    #next_game_countdown = 10240
+
+    # swap buffers
+    pygame.display.update()
+    clock.tick(120)
+
