@@ -10,7 +10,7 @@ import rocket_explosion
 DEBUG = False
 
 # initalize parameters
-MAX_ASTEROIDS = 24
+MAX_ASTEROIDS = 16
 GAME_LIVES = 3
 GAME_RESTARTS_IN = 1024
 
@@ -56,7 +56,7 @@ background = pygame.image.load('images/outer-1614965066305-5634.jpg')
 background_scroll_in_x = 0
 background_scroll_in_x_amount = 0 #-0.2
 background_scroll_in_y = 0
-background_scroll_in_y_amount = 0 #0.2
+background_scroll_in_y_amount = 0 #0.01
 
 # init clocks
 clock = pygame.time.Clock()
@@ -163,6 +163,7 @@ while running:
                 next_game_countdown = GAME_RESTARTS_IN
                 rocket_explosion.rocket_destroyed = False
                 rocket.reset_rocket()
+                background_scroll_in_y = 0
 
     # swap buffers
     pygame.display.update()

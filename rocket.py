@@ -61,16 +61,20 @@ class Rocket:
 
         if self.rocket_x < 0:
             self.rocket_x = 0
-            self.rocket_acceleration_x = 0
+            self.rocket_acceleration_x = self.rocket_acceleration_x * -1
+            self.rocket_acceleration_actual_x = self.rocket_acceleration_actual_x * -1
         if self.rocket_x > (800 - 32):
             self.rocket_x = 800 - 32
-            self.rocket_acceleration_x = 0
+            self.rocket_acceleration_x = self.rocket_acceleration_x * -1
+            self.rocket_acceleration_actual_x = self.rocket_acceleration_actual_x * -1
         if self.rocket_y < 0:
             self.rocket_y = 0
-            self.rocket_acceleration_y = 0
+            self.rocket_acceleration_y = self.rocket_acceleration_y * -1
+            self.rocket_acceleration_actual_y = self.rocket_acceleration_actual_y * -1
         if self.rocket_y > (600 - 32):
             self.rocket_y = (600 - 32)
-            self.rocket_acceleration_y = 0
+            self.rocket_acceleration_y = self.rocket_acceleration_y * -1
+            self.rocket_acceleration_actual_y = self.rocket_acceleration_actual_y * -1
 
     def redraw(self, explosion):
         # redraw bullets
