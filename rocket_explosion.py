@@ -8,7 +8,6 @@ class RocketExplosion:
         self.rocket_explosion_animation_frame_timer = 0
         self.rocket_explosion_animation_frame = 0
         self.rocket_explosion_image = []
-        self.rocket_explosion = False
         self.rocket_destroyed = False
         self.explosion_sound = pygame.mixer.Sound('sounds/rocket_explodes.wav')
         for frame in range(1, 13):

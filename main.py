@@ -6,7 +6,6 @@ import time
 import asteroid
 import rocket
 import rocket_explosion
-import rocket_blaster
 
 # debugging
 DEBUG = False
@@ -30,7 +29,8 @@ pygame.display.set_caption("Asteroids")
 # initialize rocket
 rocket = rocket.Rocket(screen)
 
-# initialize rocket_explosion (resets rocket_explosion and rocket_destroyed)
+# initialize rocket_explosion, which is separate object from rocket
+# this also resets rocket_explosion and rocket_destroyed
 rocket_explosion = rocket_explosion.RocketExplosion(screen)
 
 # initialize asteroids
@@ -69,7 +69,7 @@ while running:
             if event.key == pygame.K_DOWN:
                 rocket.rocket_thrust_down = True
             if event.key == pygame.K_SPACE:
-                rocket.rocket_blast = True
+                rocket.blaster_triggered = True
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 rocket.rocket_thrust_right = False
@@ -80,21 +80,31 @@ while running:
             if event.key == pygame.K_DOWN:
                 rocket.rocket_thrust_down = False
 
+    # if rocket is exploding, engines produce no thrust
     if rocket.explosion:
         rocket.rocket_thrust_right = False
         rocket.rocket_thrust_left = False
         rocket.rocket_thrust_up = False
         rocket.rocket_thrust_down = False
 
+    # draw background
     screen.blit(background, (int(background_scroll_in_x), int(background_scroll_in_y)))
     background_scroll_in_x += background_scroll_in_x_amount
     background_scroll_in_y += background_scroll_in_y_amount
-    rocket.redraw(rocket.explosion)
-    rocket_mask, rocket_x, rocket_y = rocket.get_collision_data_rocket()
 
+    # update rocket position all the time regardless the damage
+    rocket.update_position()
+
+    # redraw rocket
+    if not rocket.explosion:
+        rocket.redraw()
+
+    # check for asteroids collisions
+    rocket_mask, rocket_x, rocket_y = rocket.get_collision_data_rocket()
     for asteroid in asteroids:
         asteroid.redraw()
         asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
+        # -= asteroid =- collides with -= blast =-
         if rocket.check_collision_data_blasts(asteroid_mask, asteroid_x, asteroid_y):
             asteroid.asteroid_hit = True
             asteroid.initial_inertia()
@@ -103,26 +113,29 @@ while running:
                 asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
             print("HIT!")
 
+        # -= asteroid =- collides with -= rocket =- (if the rocket is fine)
         if not rocket.explosion:
             asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
             offset_x = rocket_x - asteroid_x
             offset_y = rocket_y - asteroid_y
             overlap = asteroid_mask.overlap(rocket_mask, (offset_x, offset_y))
             if overlap is not None:
+                # -= asteroid =- hit -= rocket =-
                 rocket.explosion = True
-                if DEBUG:
-                    print('[d] collision rocket   x, y: ', rocket_x, rocket_y)
-                    print('[d] collision asteroid x, y: ', asteroid_x, asteroid_y)
-                    print('[d] collision offset   x, y: ', overlap, offset_x, offset_y)
 
+    # draw explosion
     if rocket.explosion:
         rocket_explosion.redraw(rocket_x, rocket_y)
 
-    if(random.randint(0, 100) == 0):
+    # check FPS performance, randomly
+    if random.randint(0, 100) == 0:
         fps = str(int((clock.get_fps())))
         text_info_fps = game_font.render('FPS:' + fps, False, FPS_TEXT_COLOUR)
 
+    # all the time draw the FPS performance
     screen.blit(text_info_fps, (8, 8))
+
+    # swap buffers
     pygame.display.update()
     clock.tick(120)
 
