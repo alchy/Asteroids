@@ -2,6 +2,7 @@
 
 import pygame
 import random
+import parameters
 import asteroid
 import rocket
 import rocket_explosion
@@ -21,13 +22,12 @@ print(pygame.mixer.get_init())
 
 # initialize game contents
 game_score = 0
-game_lives = GAME_LIVES
+game_lives = parameters.GAME_LIVES
 next_game_countdown = GAME_RESTARTS_IN
 
-
 # initialize screen
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("Asteroids")
+screen = pygame.display.set_mode(parameters.SCREEN_SIZE)
+pygame.display.set_caption(parameters.SCREEN_CAPTION)
 
 # initialize rocket
 rocket = rocket.Rocket(screen)
@@ -47,9 +47,12 @@ for i in range(MAX_ASTEROIDS):
 # text features, prerender first text
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
-game_font_small = pygame.font.SysFont('Trebuchet MS', 16)
-game_font_big = pygame.font.SysFont('Trebuchet MS', 16)
 
+game_font_small = pygame.font.Font('fonts/supercomputer.ttf', 20)
+game_font_large = pygame.font.Font('fonts/supercomputer.ttf', 40)
+
+(LEVEL_RESTARTS) = game_font_large.render("LEVEL RESTARTS IN 4", False, WHITE).get_rect().bottomright
+LEVEL_RESTARTS_POS = [int((screen - banner) / 2) for screen, banner in zip(parameters.SCREEN_SIZE, LEVEL_RESTARTS)]
 
 # https://wallup.net/outer-space-galaxies-planets/
 background = pygame.image.load('images/outer-1614965066305-5634.jpg')
@@ -138,26 +141,26 @@ while running:
 
 
     # draw stats
-    text_info_fps = game_font_small.render('FPS:' + str(int((clock.get_fps()))), False, YELLOW)
-    text_info_score = game_font_big.render('SCORE:' + '{:0>5}'.format(str(game_score)), False, YELLOW)
-    text_info_lives = game_font_big.render('LIVES:' + '{:0>2}'.format(str(game_lives)), False, YELLOW)
+    text_info_fps = game_font_small.render('FPS: ' + str(int((clock.get_fps()))), False, YELLOW)
+    text_info_score = game_font_small.render('SCORE: ' + '{:0>5}'.format(str(game_score)), False, YELLOW)
+    text_info_lives = game_font_small.render('LIVES: ' + '{:0>2}'.format(str(game_lives)), False, YELLOW)
     screen.blit(text_info_fps, (8, 8))
     screen.blit(text_info_score, (350, 8))
-    screen.blit(text_info_lives, (730, 8))
+    screen.blit(text_info_lives, (712, 8))
 
     if game_lives == 0:
         running = False
     else:
         if rocket_explosion.rocket_destroyed:
             if next_game_countdown == int(GAME_RESTARTS_IN / 4) * 4:
-                text_info_countdown = game_font_big.render("LEVEL RESTART IN 4", False, WHITE)
+                text_info_countdown = game_font_large.render("LEVEL RESTARTS IN 4", False, WHITE)
             if next_game_countdown == int(GAME_RESTARTS_IN / 4) * 3:
-                text_info_countdown = game_font_big.render("LEVEL RESTART IN 3", False, WHITE)
+                text_info_countdown = game_font_large.render("LEVEL RESTARTs IN 3", False, WHITE)
             if next_game_countdown == int(GAME_RESTARTS_IN / 4) * 2:
-                text_info_countdown = game_font_big.render("LEVEL RESTART IN 2", False, WHITE)
+                text_info_countdown = game_font_large.render("LEVEL RESTARTs IN 2", False, WHITE)
             if next_game_countdown == int(GAME_RESTARTS_IN / 4) * 1:
-                text_info_countdown = game_font_big.render("LEVEL RESTART IN 1", False, WHITE)
-            screen.blit(text_info_countdown, (340, 550))
+                text_info_countdown = game_font_large.render("LEVEL RESTARTS IN 1", False, WHITE)
+            screen.blit(text_info_countdown, LEVEL_RESTARTS_POS)
             next_game_countdown -= 1
             if next_game_countdown == 0:
                 next_game_countdown = GAME_RESTARTS_IN
