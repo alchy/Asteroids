@@ -1,7 +1,12 @@
 ## Asteroids<br />
 
-Python 3.9 + PyGame<br />
+Main tools: Python 3.9 + PyGame<br />
+Secondary: GIMP 2.10<br />
+GFX: temporary, from internet wallpapers should be replaced with originals<br />
+MFX: from public effect libs<br />
 
-learning PyGame library...<br />
-
-![alt text](https://github.com/alchy/Asteroids/blob/master/images/screenshots/ingame.jpg)
+Main purpose of the project is to learn PyGame library and check what could be done with it...<br />
+<br />
+![alt text](https://github.com/alchy/Asteroids/blob/master/images/screenshots/ingame_1.jpg)
+<br />
+![alt text](https://github.com/alchy/Asteroids/blob/master/images/screenshots/ingame_2.jpg)

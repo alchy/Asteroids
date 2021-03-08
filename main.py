@@ -127,8 +127,9 @@ while running:
 
     # handle game restarts
     if game_lives == 0:
-        running = False
-        print("Your Score is: ", game_score)
+        #running = False
+        #print("Your Score is: ", game_score)
+        banners.game_your_score(game_score)
     else:
         if rocket_explosion.rocket_destroyed:
             if banners.game_restarts():

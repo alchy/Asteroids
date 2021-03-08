@@ -9,6 +9,7 @@ class Banners:
         # init game fonts
         self.game_font_small = pygame.font.Font('fonts/supercomputer.ttf', 20)
         self.game_font_large = pygame.font.Font('fonts/supercomputer.ttf', 40)
+        self.game_font_extra = pygame.font.Font('fonts/supercomputer.ttf', 64)
 
         # init and compute position of "GAME RESTARTS IN: ..." banner
         self.next_game_countdown = parameters.GAME_RESTARTS_IN
@@ -18,13 +19,13 @@ class Banners:
                                         zip(parameters.SCREEN_SIZE, \
                                             self.text_info_countdown.get_rect().bottomright)]
         # init and compute position of "FPS: ..." banner
-        self.text_info_fps = self.game_font_small.render('FPS: ' + '{:0>5}'.format(str(0)), \
+        self.text_info_fps = self.game_font_small.render('FPS: ' + '{:0>3}'.format(str(0)), \
                                                          False, parameters.GAME_STATS_COLOR)
         text_pos_x, text_pos_y = self.text_info_fps.get_rect().bottomright
         self.TEXT_FPS_POS = (parameters.GAME_BANNER_EDGE_OFFSET, parameters.GAME_BANNER_EDGE_OFFSET)
 
         # init and compute position of "SCORE: ..." banner
-        self.text_info_score = self.game_font_small.render('SCORE: ' + '{:0>5}'.format(str(int((0)))), \
+        self.text_info_score = self.game_font_small.render('SCORE: ' + '{:0>8}'.format(str(int((0)))), \
                                                            False, parameters.GAME_STATS_COLOR)
         text_pos_x, text_pos_y = self.text_info_score.get_rect().bottomright
         self.TEXT_SCORE_POS = ((int((parameters.SCREEN_WIDTH - text_pos_x) / 2)), parameters.GAME_BANNER_EDGE_OFFSET)
@@ -36,11 +37,17 @@ class Banners:
         self.TEXT_LIVES_POS = (int(parameters.SCREEN_WIDTH - text_pos_x - parameters.GAME_BANNER_EDGE_OFFSET), \
                                parameters.GAME_BANNER_EDGE_OFFSET)
 
+        # init and compute position of "YOUR SCORE ..." banner
+        self.text_info_final_score = self.game_font_extra.render("12345678", False, parameters.GAME_RESTART_COLOR)
+        self.TEXT_LEVEL_FINAL_SCORE_POS = [int((screen - banner) / 2) for screen, banner in
+                                        zip(parameters.SCREEN_SIZE, \
+                                            self.text_info_final_score.get_rect().bottomright)]
+
     def game_stats(self, actual_fps, game_score, game_lives):
         # draw stats
         text_info_fps = self.game_font_small.render('FPS: ' + str(int((actual_fps))), \
                                                     False, parameters.GAME_STATS_COLOR)
-        text_info_score = self.game_font_small.render('SCORE: ' + '{:0>5}'.format(str(game_score)), \
+        text_info_score = self.game_font_small.render('SCORE: ' + '{:0>8}'.format(str(game_score)), \
                                                       False, parameters.GAME_STATS_COLOR)
         text_info_lives = self.game_font_small.render('LIVES: ' + '{:0>2}'.format(str(game_lives)), \
                                                       False, parameters.GAME_STATS_COLOR)
@@ -68,3 +75,8 @@ class Banners:
         else:
             self.next_game_countdown = parameters.GAME_RESTARTS_IN
             return True
+
+    def game_your_score(self, game_score):
+        self.text_info_final_score = self.game_font_extra.render('{:0>8}'.format(str(game_score)), \
+                                                                  False, parameters.GAME_RESTART_COLOR)
+        self.screen.blit(self.text_info_final_score, self.TEXT_LEVEL_FINAL_SCORE_POS)
