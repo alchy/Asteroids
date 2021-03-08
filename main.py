@@ -2,6 +2,7 @@
 import pygame
 import parameters
 import banners
+import background
 import asteroid
 import rocket
 import rocket_explosion
@@ -27,6 +28,9 @@ game_lives = parameters.GAME_LIVES
 screen = pygame.display.set_mode(parameters.SCREEN_SIZE)
 pygame.display.set_caption(parameters.SCREEN_CAPTION)
 
+# initialize background
+background = background.Background(screen)
+
 # initialize in-game gauges (aka banners)
 banners = banners.Banners(screen)
 
@@ -41,13 +45,6 @@ asteroid_explosion_sound = pygame.mixer.Sound('sounds/rocket_explodes.wav')
 asteroid_explosion_sound.set_volume(0.3)
 for i in range(MAX_ASTEROIDS):
     asteroids.append(asteroid.Asteroid(screen))
-
-# https://wallup.net/outer-space-galaxies-planets/
-background = pygame.image.load('images/outer-1614965066305-5634.jpg')
-background_scroll_in_x = 0
-background_scroll_in_x_amount = 0 #-0.2
-background_scroll_in_y = 0
-background_scroll_in_y_amount = 0 #0.01
 
 # init clocks
 clock = pygame.time.Clock()
@@ -87,13 +84,13 @@ while running:
         rocket.rocket_thrust_down = False
 
     # draw background
-    screen.blit(background, (int(background_scroll_in_x), int(background_scroll_in_y)))
-    background_scroll_in_x += background_scroll_in_x_amount
-    background_scroll_in_y += background_scroll_in_y_amount
+    background.redraw()
 
     # update rocket position and redraw rocket (according to rocket conditions)
     rocket.update_position()
     rocket.redraw(rocket.explosion)
+    if not rocket.explosion:
+        game_score += 1
 
     # check for asteroids collisions
     rocket_mask, rocket_x, rocket_y = rocket.get_collision_data_rocket()
@@ -103,7 +100,7 @@ while running:
         # -= asteroid =- collides with -= blast =-
         if rocket.check_collision_data_blasts(asteroid_mask, asteroid_x, asteroid_y):
             asteroid.asteroid_hit = True
-            game_score += 10
+            game_score += 100
             asteroid_explosion_sound.play()
             asteroid.initial_inertia()
             # hack (fisrt explosion, then inertia or asteroid off)
@@ -131,6 +128,7 @@ while running:
     # handle game restarts
     if game_lives == 0:
         running = False
+        print("Your Score is: ", game_score)
     else:
         if rocket_explosion.rocket_destroyed:
             if banners.game_restarts():
