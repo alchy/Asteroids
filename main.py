@@ -27,14 +27,12 @@ game_lives = parameters.GAME_LIVES
 screen = pygame.display.set_mode(parameters.SCREEN_SIZE)
 pygame.display.set_caption(parameters.SCREEN_CAPTION)
 
-# initialize banners
+# initialize in-game gauges (aka banners)
 banners = banners.Banners(screen)
 
-# initialize rocket
-rocket = rocket.Rocket(screen)
-
-# initialize rocket_explosion, which is separate object from rocket
+# initialize rocket and rocket_explosion, which are separate objects
 # this also resets rocket_explosion and rocket_destroyed
+rocket = rocket.Rocket(screen)
 rocket_explosion = rocket_explosion.RocketExplosion(screen)
 
 # initialize asteroids
@@ -93,10 +91,8 @@ while running:
     background_scroll_in_x += background_scroll_in_x_amount
     background_scroll_in_y += background_scroll_in_y_amount
 
-    # update rocket position all the time regardless the damage
+    # update rocket position and redraw rocket (according to rocket conditions)
     rocket.update_position()
-
-    # always call this, redraw rocket and bullets according to rocket condition
     rocket.redraw(rocket.explosion)
 
     # check for asteroids collisions
@@ -129,9 +125,10 @@ while running:
     if rocket.explosion:
         rocket_explosion.redraw(rocket_x, rocket_y)
 
-    # print game stats
+    # print in-game stats all the time
     banners.game_stats(clock.get_fps(), game_score, game_lives)
 
+    # handle game restarts
     if game_lives == 0:
         running = False
     else:
