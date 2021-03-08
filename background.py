@@ -6,7 +6,7 @@ class Star:
     def __init__(self):
         self.x = random.randint(0, parameters.SCREEN_WIDTH)
         self.y = random.randint(parameters.SCREEN_HEIGHT * -1, 0)
-        self.speed = random.random()
+        self.speed = random.random() + 0.2
 
     def update_position(self):
         self.y += self.speed

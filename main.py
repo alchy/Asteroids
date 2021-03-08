@@ -1,4 +1,4 @@
-# Game by MQ and Platypus
+# Asteroids / Cement Game by MQ and Platypus
 import pygame
 import parameters
 import banners
@@ -140,4 +140,4 @@ while running:
 
     # swap buffers
     pygame.display.update()
-    clock.tick(120)
+    clock.tick(parameters.FPS_LIMIT)
