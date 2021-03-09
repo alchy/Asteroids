@@ -10,14 +10,31 @@ class Asteroid:
         self.asteroid_animation_frame_timer = random.randint(0, 8)
         self.asteroid_image = []
         self.asteroid_mask = []
-        for frame in range(1, 21):
-            print('[i] Loading asteroids: ')
-            load_filename = 'images/asteroid_animated/asteroid_animated_page_' \
-                            + str('{:0>4}'.format(frame)) \
-                            + '.gif'
-            asteroid_image_tmp = pygame.image.load(load_filename)
-            self.asteroid_image.append(asteroid_image_tmp)
-            self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
+
+        if random.randint(0, 15) == 0:
+            self.asteroid_frames = 30
+            self.asteroid_animation_frame_timer_limit = 3
+            for frame in range(1, self.asteroid_frames + 1):
+                print('[i] Loading asteroids: ')
+                load_filename = 'images/asteroid_animated_gold/asteroid_animated_gold_page_' \
+                                + str('{:0>4}'.format(frame)) \
+                                + '.gif'
+                asteroid_image_tmp = pygame.image.load(load_filename)
+                self.asteroid_image.append(asteroid_image_tmp)
+                self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
+        else:
+            self.asteroid_frames = 20
+            self.asteroid_animation_frame_timer_limit = 8
+            for frame in range(1, self.asteroid_frames + 1):
+                print('[i] Loading asteroids: ')
+                load_filename = 'images/asteroid_animated/asteroid_animated_page_' \
+                                + str('{:0>4}'.format(frame)) \
+                                + '.gif'
+                asteroid_image_tmp = pygame.image.load(load_filename)
+                self.asteroid_image.append(asteroid_image_tmp)
+                self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
+
+
         self.asteroid_rect = self.asteroid_image[0].get_rect()
         self.asteroid_position_x, self.asteroid_position_y, \
             self.asteroid_acceleration_x, self.asteroid_acceleration_y = self.initial_inertia()
@@ -62,10 +79,10 @@ class Asteroid:
     def redraw(self):
         self.recalculate_position()
         self.asteroid_animation_frame_timer += 1
-        if self.asteroid_animation_frame_timer > 8:
+        if self.asteroid_animation_frame_timer > self.asteroid_animation_frame_timer_limit:
             self.asteroid_animation_frame_timer = 0
             self.asteroid_animation_frame += 1
-        if self.asteroid_animation_frame > 19:
+        if self.asteroid_animation_frame > self.asteroid_frames - 1:
             self.asteroid_animation_frame = 0
         self.screen.blit(self.asteroid_image[self.asteroid_animation_frame], \
                          (self.asteroid_rect.x, self.asteroid_rect.y))
