@@ -48,6 +48,7 @@ for i in range(MAX_ASTEROIDS):
 
 # init clocks
 clock = pygame.time.Clock()
+fps = 0
 
 # main loop
 running = True
@@ -125,7 +126,8 @@ while running:
         rocket_explosion.redraw(rocket_x, rocket_y)
 
     # print in-game stats all the time
-    banners.game_stats(clock.get_fps(), game_score, game_lives)
+    fps = int((fps + clock.get_fps()) / 2)
+    banners.game_stats(fps, game_score, game_lives)
 
     # handle game restarts
     if game_lives == 0:
