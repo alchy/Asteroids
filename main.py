@@ -26,7 +26,7 @@ game_lives = parameters.GAME_LIVES
 
 # initialize screen
 flags = pygame.FULLSCREEN | pygame.SCALED | pygame.HWSURFACE
-screen = pygame.display.set_mode(parameters.SCREEN_SIZE, flags, vsync = 0)
+screen = pygame.display.set_mode(parameters.SCREEN_SIZE, flags, vsync=0)
 pygame.display.set_caption(parameters.SCREEN_CAPTION)
 
 # initialize background
@@ -108,7 +108,7 @@ while running:
             asteroid.initial_inertia()
             # hack (fisrt explosion, then inertia or asteroid off)
             asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
-                asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
+            asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
         # -= asteroid =- collides with -= rocket =- (if the rocket is fine)
         if not rocket.explosion:
             asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
@@ -130,8 +130,8 @@ while running:
 
     # handle game restarts
     if game_lives == 0:
-        #running = False
-        #print("Your Score is: ", game_score)
+        # running = False
+        # print("Your Score is: ", game_score)
         banners.game_your_score(game_score)
     else:
         if rocket_explosion.rocket_destroyed:

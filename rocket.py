@@ -1,5 +1,6 @@
 import pygame
 import rocket_blaster
+import parameters
 
 MUTE_SOUND = False
 
@@ -12,8 +13,8 @@ class Rocket:
         self.rocket_blaster_sound = pygame.mixer.Sound('sounds/blaster_shot.wav')
         self.rocket_blaster_sound.set_volume(0.5)
         self.rocket_rect = self.rocket_image.get_rect()
-        self.rocket_x = 370
-        self.rocket_y = 480
+        self.rocket_x = parameters.ROCKET_INITIAL_X
+        self.rocket_y = parameters.ROCKET_INITIAL_Y
         self.rocket_acceleration_step = 0.02
         self.rocket_acceleration_actual_x = 0.0
         self.rocket_acceleration_actual_y = 0.0
@@ -59,20 +60,20 @@ class Rocket:
             self.rocket_acceleration_actual_y += self.rocket_acceleration_step
         self.rocket_y += self.rocket_acceleration_actual_y
 
-        if self.rocket_x < 0:
-            self.rocket_x = 0
+        if self.rocket_x < parameters.ROCKET_MIN_X:
+            self.rocket_x = parameters.ROCKET_MIN_X
             self.rocket_acceleration_x = self.rocket_acceleration_x * -1
             self.rocket_acceleration_actual_x = self.rocket_acceleration_actual_x * -1
-        if self.rocket_x > (800 - 32):
-            self.rocket_x = 800 - 32
+        if self.rocket_x > parameters.ROCKET_MAX_X:
+            self.rocket_x = parameters.ROCKET_MAX_X
             self.rocket_acceleration_x = self.rocket_acceleration_x * -1
             self.rocket_acceleration_actual_x = self.rocket_acceleration_actual_x * -1
-        if self.rocket_y < 0:
-            self.rocket_y = 0
+        if self.rocket_y < parameters.ROCKET_MIN_Y:
+            self.rocket_y = parameters.ROCKET_MIN_Y
             self.rocket_acceleration_y = self.rocket_acceleration_y * -1
             self.rocket_acceleration_actual_y = self.rocket_acceleration_actual_y * -1
-        if self.rocket_y > (600 - 32):
-            self.rocket_y = (600 - 32)
+        if self.rocket_y > parameters.ROCKET_MAX_Y:
+            self.rocket_y = parameters.ROCKET_MAX_Y
             self.rocket_acceleration_y = self.rocket_acceleration_y * -1
             self.rocket_acceleration_actual_y = self.rocket_acceleration_actual_y * -1
 
