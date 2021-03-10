@@ -10,18 +10,10 @@ import rocket_explosion
 # debugging
 DEBUG = False
 
-# initalize parameters
-MAX_ASTEROIDS = 16
-GAME_LIVES = 3
-
 # initialize pygame
 print(pygame.init())
 print(pygame.font.init())
 print(pygame.mixer.get_init())
-
-# initialize game contents
-game_score = 0
-game_lives = parameters.GAME_LIVES
 
 # initialize screen
 flags = pygame.FULLSCREEN | pygame.SCALED | pygame.HWSURFACE
@@ -37,7 +29,15 @@ banners = banners.Banners(screen)
 # initialize rocket and rocket_explosion, which are separate objects
 # this also resets rocket_explosion and rocket_destroyed
 rocket = rocket.Rocket(screen)
+rocket.explosion = True
+
 rocket_explosion = rocket_explosion.RocketExplosion(screen)
+rocket_explosion.rocket_destroyed = True
+
+MAX_ASTEROIDS = 16
+game_score = 0
+game_lives = 0 #parameters.GAME_LIVES
+start_new_game = False
 
 # initialize asteroids
 asteroids = []
@@ -66,7 +66,10 @@ while running:
             if event.key == pygame.K_DOWN:
                 rocket.rocket_thrust_down = True
             if event.key == pygame.K_SPACE:
-                rocket.blaster_triggered = True
+                if game_lives:
+                    rocket.blaster_triggered = True
+                else:
+                    start_new_game = True
             if event.key == pygame.K_ESCAPE:
                 running = False
         elif event.type == pygame.KEYUP:
@@ -131,7 +134,14 @@ while running:
 
     # handle game restarts
     if game_lives == 0:
-        banners.game_your_score(game_score)
+        if start_new_game:
+            if banners.game_restarts():
+                game_lives = parameters.GAME_LIVES
+                rocket.explosion = False
+                rocket_explosion.rocket_destroyed = False
+                start_new_game = False
+        else:
+            banners.game_your_score(game_score)
     else:
         if rocket.explosion:
             if banners.game_restarts():
