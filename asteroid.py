@@ -69,11 +69,9 @@ class Asteroid:
     def recalculate_position(self):
         self.asteroid_position_x += self.asteroid_acceleration_x
         self.asteroid_position_y += self.asteroid_acceleration_y
-        self.asteroid_rect.x = int(self.asteroid_position_x)
-        self.asteroid_rect.y = int(self.asteroid_position_y)
         if \
-                self.asteroid_rect.x < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_FROM or \
-                self.asteroid_rect.x > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO or \
+                self.asteroid_position_x < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_FROM or \
+                self.asteroid_position_x > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO or \
                 self.asteroid_position_y < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM or \
                 self.asteroid_position_y > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_TO:
             if DEBUG:
@@ -83,7 +81,7 @@ class Asteroid:
 
     def get_collision_data(self):
         return(self.asteroid_mask[self.asteroid_animation_frame], \
-               self.asteroid_rect.x, self.asteroid_rect.y, )
+               int(self.asteroid_position_x), int(self.asteroid_position_y))
 
     def redraw(self):
         self.recalculate_position()
@@ -94,4 +92,4 @@ class Asteroid:
         if self.asteroid_animation_frame > self.asteroid_frames - 1:
             self.asteroid_animation_frame = 0
         self.screen.blit(self.asteroid_image[self.asteroid_animation_frame], \
-                         (self.asteroid_rect.x, self.asteroid_rect.y))
+                         (int(self.asteroid_position_x), int(self.asteroid_position_y)))
