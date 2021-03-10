@@ -14,7 +14,6 @@ DEBUG = False
 MAX_ASTEROIDS = 16
 GAME_LIVES = 3
 
-
 # initialize pygame
 print(pygame.init())
 print(pygame.font.init())
@@ -95,7 +94,7 @@ while running:
     if not rocket.explosion:
         game_score += 1
 
-    # check for asteroids collisions
+    # check for asteroids collisions (cheat, if necessary, do collision checking each even frame, redraw every frame)
     rocket_mask, rocket_x, rocket_y = rocket.get_collision_data_rocket()
     for asteroid in asteroids:
         asteroid.redraw()

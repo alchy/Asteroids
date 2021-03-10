@@ -2,7 +2,7 @@ import pygame
 import parameters
 import random
 
-DEBUG = True
+DEBUG = False
 
 class Asteroid:
     def __init__(self, screen):

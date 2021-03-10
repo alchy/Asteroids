@@ -16,7 +16,8 @@ class Star:
 class Background:
     def __init__(self, screen):
         self.screen = screen
-        self.background = pygame.image.load('images/world-space-atmosphere-ship-panorama-small.jpg')
+        #self.background = pygame.image.load('images/world-space-atmosphere-ship-panorama-small.jpg')
+        self.background = pygame.image.load('images/background_level_000.jpg')
         self.background_width, self.background_height = self.background.get_rect().bottomright
 
         self.background_scroll_in_x = 0
