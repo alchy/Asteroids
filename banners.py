@@ -26,8 +26,8 @@ class Banners:
         text_pos_x, text_pos_y = self.text_info_score.get_rect().bottomright
         self.TEXT_SCORE_POS = ((int((parameters.SCREEN_WIDTH - text_pos_x) / 2)), parameters.GAME_BANNER_EDGE_OFFSET)
 
-        # init and compute position of "LIVES: ..." banner
-        self.text_info_lives = self.game_font_small.render('LIVES: ' + '{:0>2}'.format(str(int((0)))), \
+        # init and compute position of "LIVES/COINS: ..." banner
+        self.text_info_lives = self.game_font_small.render('COINS: ' + '{:0>2}'.format(str(int((0)))), \
                                                            False, parameters.GAME_STATS_COLOR)
         text_pos_x, text_pos_y = self.text_info_lives.get_rect().bottomright
         self.TEXT_LIVES_POS = (int(parameters.SCREEN_WIDTH - text_pos_x - parameters.GAME_BANNER_EDGE_OFFSET), \
@@ -45,7 +45,7 @@ class Banners:
                                                     False, parameters.GAME_STATS_COLOR)
         text_info_score = self.game_font_small.render('SCORE: ' + '{:0>8}'.format(str(game_score)), \
                                                       False, parameters.GAME_STATS_COLOR)
-        text_info_lives = self.game_font_small.render('LIVES: ' + '{:0>2}'.format(str(game_lives)), \
+        text_info_lives = self.game_font_small.render('COINS: ' + '{:0>2}'.format(str(game_lives)), \
                                                       False, parameters.GAME_STATS_COLOR)
         self.screen.blit(text_info_fps, self.TEXT_FPS_POS)
         self.screen.blit(text_info_score, self.TEXT_SCORE_POS)
