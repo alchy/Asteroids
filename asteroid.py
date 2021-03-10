@@ -4,6 +4,7 @@ import random
 
 DEBUG = False
 
+
 class Asteroid:
     def __init__(self, screen):
         self.screen = screen
@@ -35,7 +36,6 @@ class Asteroid:
                 self.asteroid_image.append(asteroid_image_tmp)
                 self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
 
-
         self.asteroid_rect = self.asteroid_image[0].get_rect()
         self.asteroid_position_x, self.asteroid_position_y, \
             self.asteroid_acceleration_x, self.asteroid_acceleration_y = self.initial_inertia()
@@ -63,25 +63,25 @@ class Asteroid:
         inertia_y = random.uniform(-1.5, +1.5)
         while inertia_y == 0.0:
             inertia_y = random.uniform(-1.5, +1.5)
-        return(float(initial_x), float(initial_y), \
-              float(inertia_x), float(inertia_y))
+        return (float(initial_x), float(initial_y), \
+                float(inertia_x), float(inertia_y))
 
     def recalculate_position(self):
         self.asteroid_position_x += self.asteroid_acceleration_x
         self.asteroid_position_y += self.asteroid_acceleration_y
         if \
                 self.asteroid_position_x < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_FROM or \
-                self.asteroid_position_x > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO or \
-                self.asteroid_position_y < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM or \
-                self.asteroid_position_y > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_TO:
+                        self.asteroid_position_x > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO or \
+                        self.asteroid_position_y < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM or \
+                        self.asteroid_position_y > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_TO:
             if DEBUG:
                 print("Inertia reset...")
             self.asteroid_position_x, self.asteroid_position_y, \
             self.asteroid_acceleration_x, self.asteroid_acceleration_y = self.initial_inertia()
 
     def get_collision_data(self):
-        return(self.asteroid_mask[self.asteroid_animation_frame], \
-               int(self.asteroid_position_x), int(self.asteroid_position_y))
+        return (self.asteroid_mask[self.asteroid_animation_frame], \
+                int(self.asteroid_position_x), int(self.asteroid_position_y))
 
     def redraw(self):
         self.recalculate_position()

@@ -70,6 +70,8 @@ class Banners:
                 self.text_info_countdown = self.game_font_large.render("LEVEL RESTARTS IN 1", False,
                                                                        parameters.GAME_RESTART_COLOR)
             self.next_game_countdown -= 1
+            self.text_info_countdown.set_alpha(int(((\
+                        self.next_game_countdown / parameters.GAME_RESTARTS_IN)) * 255))
             self.screen.blit(self.text_info_countdown, self.TEXT_LEVEL_RESTARTS_POS)
             return False
         else:
@@ -79,4 +81,5 @@ class Banners:
     def game_your_score(self, game_score):
         self.text_info_final_score = self.game_font_extra.render('{:0>8}'.format(str(game_score)), \
                                                                   False, parameters.GAME_RESTART_COLOR)
+        self.text_info_final_score.set_alpha(70)
         self.screen.blit(self.text_info_final_score, self.TEXT_LEVEL_FINAL_SCORE_POS)
