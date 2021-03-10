@@ -25,7 +25,8 @@ game_score = 0
 game_lives = parameters.GAME_LIVES
 
 # initialize screen
-screen = pygame.display.set_mode(parameters.SCREEN_SIZE)
+flags = pygame.FULLSCREEN | pygame.SCALED | pygame.HWSURFACE
+screen = pygame.display.set_mode(parameters.SCREEN_SIZE, flags, vsync = 0)
 pygame.display.set_caption(parameters.SCREEN_CAPTION)
 
 # initialize background
@@ -66,6 +67,8 @@ while running:
                 rocket.rocket_thrust_down = True
             if event.key == pygame.K_SPACE:
                 rocket.blaster_triggered = True
+            if event.key == pygame.K_ESCAPE:
+                running = False
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 rocket.rocket_thrust_right = False

@@ -1,7 +1,8 @@
 import pygame
+import parameters
 import random
 
-DEBUG = False
+DEBUG = True
 
 class Asteroid:
     def __init__(self, screen):
@@ -44,13 +45,18 @@ class Asteroid:
         self.asteroid_destroyed = False
 
     def initial_inertia(self):
-        # 800x600
-        initial_x = random.randint(-200, 1000)
-        while initial_x > -100 and initial_x < 900:
-            initial_x = random.randint(-200, 1000)
-        initial_y = random.randint(-200, 800)
-        while initial_y > -100 and initial_y < 700:
-            initial_y = random.randint(-200, 800)
+        if random.randint(0, 1):
+            initial_x = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_FROM, \
+                                       parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_TO)
+        else:
+            initial_x = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_FROM, \
+                                       parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO)
+        if random.randint(0, 1):
+            initial_y = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM, \
+                                       parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_TO)
+        else:
+            initial_y = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_FROM, \
+                                       parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_TO)
         inertia_x = random.uniform(-1.5, +1.5)
         while inertia_x == 0.0:
             inertia_x = random.uniform(-1.5, +1.5)
@@ -65,8 +71,11 @@ class Asteroid:
         self.asteroid_position_y += self.asteroid_acceleration_y
         self.asteroid_rect.x = int(self.asteroid_position_x)
         self.asteroid_rect.y = int(self.asteroid_position_y)
-        if self.asteroid_rect.x > 1000 or self.asteroid_rect.x < -200 \
-                or self.asteroid_position_y > 800 or self.asteroid_position_y < -200:
+        if \
+                self.asteroid_rect.x < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_FROM or \
+                self.asteroid_rect.x > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO or \
+                self.asteroid_position_y < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM or \
+                self.asteroid_position_y > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_TO:
             if DEBUG:
                 print("Inertia reset...")
             self.asteroid_position_x, self.asteroid_position_y, \
