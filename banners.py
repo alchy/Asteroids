@@ -6,18 +6,14 @@ class Banners:
     def __init__(self, screen):
         self.screen = screen
 
+        #
+        self.next_game_countdown = parameters.GAME_RESTARTS_IN
+
         # init game fonts
         self.game_font_small = pygame.font.Font('fonts/supercomputer.ttf', 20)
-        self.game_font_large = pygame.font.Font('fonts/supercomputer.ttf', 40)
-        self.game_font_extra = pygame.font.Font('fonts/supercomputer.ttf', 64)
+        self.game_font_large = pygame.font.Font('fonts/supercomputer.ttf', 64)
+        self.game_font_extra = pygame.font.Font('fonts/supercomputer.ttf', 128)
 
-        # init and compute position of "GAME RESTARTS IN: ..." banner
-        self.next_game_countdown = parameters.GAME_RESTARTS_IN
-        self.text_info_countdown = self.game_font_large.render("LEVEL RESTARTS IN 4", False, \
-                                                               parameters.GAME_RESTART_COLOR)
-        self.TEXT_LEVEL_RESTARTS_POS = [int((screen - banner) / 2) for screen, banner in
-                                        zip(parameters.SCREEN_SIZE, \
-                                            self.text_info_countdown.get_rect().bottomright)]
         # init and compute position of "FPS: ..." banner
         self.text_info_fps = self.game_font_small.render('FPS: ' + '{:0>3}'.format(str(0)), \
                                                          False, parameters.GAME_STATS_COLOR)
@@ -38,7 +34,7 @@ class Banners:
                                parameters.GAME_BANNER_EDGE_OFFSET)
 
         # init and compute position of "YOUR SCORE ..." banner
-        self.text_info_final_score = self.game_font_extra.render("12345678", False, parameters.GAME_RESTART_COLOR)
+        self.text_info_final_score = self.game_font_large.render("12345678", False, parameters.GAME_RESTART_COLOR)
         self.TEXT_LEVEL_FINAL_SCORE_POS = [int((screen - banner) / 2) for screen, banner in
                                         zip(parameters.SCREEN_SIZE, \
                                             self.text_info_final_score.get_rect().bottomright)]
@@ -58,20 +54,20 @@ class Banners:
     def game_restarts(self):
         if self.next_game_countdown > 0:
             if self.next_game_countdown == parameters.GAME_RESTARTS_IN:
-                self.text_info_countdown = self.game_font_large.render("LEVEL RESTARTS IN 4", False,
+                self.text_info_countdown = self.game_font_extra.render("READY", False,
                                                                        parameters.GAME_RESTART_COLOR)
-            if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 4) * 3:
-                self.text_info_countdown = self.game_font_large.render("LEVEL RESTARTs IN 3", False,
+            if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 3) * 2:
+                self.text_info_countdown = self.game_font_extra.render("STEADY", False,
                                                                        parameters.GAME_RESTART_COLOR)
-            if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 4) * 2:
-                self.text_info_countdown = self.game_font_large.render("LEVEL RESTARTs IN 2", False,
-                                                                       parameters.GAME_RESTART_COLOR)
-            if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 4) * 1:
-                self.text_info_countdown = self.game_font_large.render("LEVEL RESTARTS IN 1", False,
+            if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 3) * 1:
+                self.text_info_countdown = self.game_font_extra.render("GO!", False,
                                                                        parameters.GAME_RESTART_COLOR)
             self.next_game_countdown -= 1
-            self.text_info_countdown.set_alpha(int(((\
-                        self.next_game_countdown / parameters.GAME_RESTARTS_IN)) * 255))
+            self.TEXT_LEVEL_RESTARTS_POS = [int((screen - banner) / 2) for screen, banner in
+                                            zip(parameters.SCREEN_SIZE, \
+                                            self.text_info_countdown.get_rect().bottomright)]
+            alpha = int(((self.next_game_countdown / parameters.GAME_RESTARTS_IN)) * 254)
+            self.text_info_countdown.set_alpha(alpha)
             self.screen.blit(self.text_info_countdown, self.TEXT_LEVEL_RESTARTS_POS)
             return False
         else:
@@ -79,7 +75,7 @@ class Banners:
             return True
 
     def game_your_score(self, game_score):
-        self.text_info_final_score = self.game_font_extra.render('{:0>8}'.format(str(game_score)), \
+        self.text_info_final_score = self.game_font_large.render('{:0>8}'.format(str(game_score)), \
                                                                   False, parameters.GAME_RESTART_COLOR)
-        self.text_info_final_score.set_alpha(70)
+        self.text_info_final_score.set_alpha(parameters.FINAL_SCORE_TEXT_ALPHA)
         self.screen.blit(self.text_info_final_score, self.TEXT_LEVEL_FINAL_SCORE_POS)
