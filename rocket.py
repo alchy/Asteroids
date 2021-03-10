@@ -41,7 +41,6 @@ class Rocket:
         self.rocket_thrust_down = False
         self.explosion = False
 
-
     def get_collision_data_rocket(self):
         return self.rocket_mask, int(self.rocket_x), int(self.rocket_y)
 
