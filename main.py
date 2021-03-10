@@ -131,7 +131,7 @@ while running:
     if game_lives == 0:
         banners.game_your_score(game_score)
     else:
-        if rocket_explosion.rocket_destroyed:
+        if rocket.explosion:
             if banners.game_restarts():
                 next_game_countdown = parameters.GAME_RESTARTS_IN
                 rocket_explosion.rocket_destroyed = False
