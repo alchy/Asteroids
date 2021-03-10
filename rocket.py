@@ -29,8 +29,8 @@ class Rocket:
         self.rocket_blaster = rocket_blaster.RocketBlaster(self.screen)
 
     def reset_rocket(self):
-        self.rocket_x = 370
-        self.rocket_y = 480
+        self.rocket_x = parameters.ROCKET_INITIAL_X
+        self.rocket_y = parameters.ROCKET_INITIAL_Y
         self.rocket_acceleration_actual_x = 0.0
         self.rocket_acceleration_actual_y = 0.0
         self.rocket_acceleration_x = 0.0

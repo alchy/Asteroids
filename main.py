@@ -13,7 +13,7 @@ DEBUG = False
 # initalize parameters
 MAX_ASTEROIDS = 16
 GAME_LIVES = 3
-GAME_RESTARTS_IN = 1024
+
 
 # initialize pygame
 print(pygame.init())
@@ -119,7 +119,7 @@ while running:
                 # -= asteroid =- hit -= rocket =-
                 rocket.explosion = True
                 game_lives -= 1
-                next_game_countdown = GAME_RESTARTS_IN
+                next_game_countdown = parameters.GAME_RESTARTS_IN
 
     # draw explosion
     if rocket.explosion:
@@ -136,7 +136,7 @@ while running:
     else:
         if rocket_explosion.rocket_destroyed:
             if banners.game_restarts():
-                next_game_countdown = GAME_RESTARTS_IN
+                next_game_countdown = parameters.GAME_RESTARTS_IN
                 rocket_explosion.rocket_destroyed = False
                 rocket.reset_rocket()
                 background_scroll_in_y = 0
