@@ -46,6 +46,10 @@ asteroid_explosion_sound.set_volume(0.3)
 for i in range(MAX_ASTEROIDS):
     asteroids.append(asteroid.Asteroid(screen))
 
+# initialize in-game music
+pygame.mixer.music.load("tracks/track_01.ogg")
+pygame.mixer.music.set_volume(0.3)
+
 # init clocks
 clock = pygame.time.Clock()
 fps = 0
@@ -122,8 +126,10 @@ if __name__ == "__main__":
                 if overlap is not None:
                     # -= asteroid =- hit -= rocket =-
                     rocket.explosion = True
-                    game_lives -= 1
                     next_game_countdown = parameters.GAME_RESTARTS_IN
+                    game_lives -= 1
+                    if game_lives == 0:
+                        pygame.mixer.music.fadeout(5000)
 
         # draw explosion
         if rocket.explosion:
@@ -141,6 +147,7 @@ if __name__ == "__main__":
                     rocket.explosion = False
                     rocket_explosion.rocket_destroyed = False
                     start_new_game = False
+                    pygame.mixer.music.play(1)
             else:
                 banners.game_your_score(game_score)
         else:
