@@ -61,17 +61,17 @@ class Banners:
     def game_restarts(self):
         if self.next_game_countdown > 0:
             if self.next_game_countdown == parameters.GAME_RESTARTS_IN:
-                self.sound_ready.play()
                 self.text_info_countdown = self.game_font_extra.render("READY", False,
                                                                        parameters.GAME_RESTART_COLOR)
+                self.sound_ready.play()
             if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 3) * 2:
-                self.sound_set.play()
                 self.text_info_countdown = self.game_font_extra.render("SET", False,
                                                                        parameters.GAME_RESTART_COLOR)
+                self.sound_set.play()
             if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 3) * 1:
-                self.sound_go.play()
                 self.text_info_countdown = self.game_font_extra.render("GO", False,
                                                                        parameters.GAME_RESTART_COLOR)
+                self.sound_go.play()
             self.next_game_countdown -= 1
             self.TEXT_LEVEL_RESTARTS_POS = [int((screen - banner) / 2) for screen, banner in
                                             zip(parameters.SCREEN_SIZE, \

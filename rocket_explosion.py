@@ -1,6 +1,6 @@
 import pygame
 
-MUTE_SOUND = False
+MUTE_SOUND = True
 
 class RocketExplosion:
     def __init__(self, screen):

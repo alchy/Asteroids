@@ -151,7 +151,7 @@ if __name__ == "__main__":
             else:
                 banners.game_your_score(game_score)
         else:
-            if rocket.explosion:
+            if rocket_explosion.rocket_destroyed:
                 if banners.game_restarts():
                     next_game_countdown = parameters.GAME_RESTARTS_IN
                     rocket_explosion.rocket_destroyed = False
