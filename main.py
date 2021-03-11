@@ -36,7 +36,7 @@ rocket_explosion.rocket_destroyed = True
 
 MAX_ASTEROIDS = 16
 game_score = 0
-game_lives = 0 #parameters.GAME_LIVES
+game_lives = 0
 start_new_game = False
 
 # initialize asteroids
@@ -144,6 +144,7 @@ if __name__ == "__main__":
             if start_new_game:
                 if banners.game_restarts():
                     game_lives = parameters.GAME_LIVES
+                    game_score = 0
                     rocket.explosion = False
                     rocket_explosion.rocket_destroyed = False
                     start_new_game = False
