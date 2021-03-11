@@ -40,11 +40,11 @@ class Banners:
                                             self.text_info_final_score.get_rect().bottomright)]
         # init banner voice
         self.sound_ready = pygame.mixer.Sound('sounds/banners/ready.wav')
-        self.sound_ready.set_volume(0.5)
+        self.sound_ready.set_volume(0.4)
         self.sound_set = pygame.mixer.Sound('sounds/banners/set.wav')
-        self.sound_set.set_volume(0.6)
+        self.sound_set.set_volume(0.4)
         self.sound_go = pygame.mixer.Sound('sounds/banners/go.wav')
-        self.sound_go.set_volume(0.7)
+        self.sound_go.set_volume(0.4)
 
     def game_stats(self, actual_fps, game_score, game_lives):
         # draw stats

@@ -41,7 +41,7 @@ start_new_game = False
 
 # initialize asteroids
 asteroids = []
-asteroid_explosion_sound = pygame.mixer.Sound('sounds/rocket_explodes.wav')
+asteroid_explosion_sound = pygame.mixer.Sound('sounds/explosions/asteroid_explodes.wav')
 asteroid_explosion_sound.set_volume(0.3)
 for i in range(MAX_ASTEROIDS):
     asteroids.append(asteroid.Asteroid(screen))
@@ -114,7 +114,7 @@ if __name__ == "__main__":
                 game_score += 100
                 asteroid_explosion_sound.play()
                 asteroid.initial_inertia()
-                # hack (fisrt explosion, then inertia or asteroid off)
+                # hack (first explosion, then inertia or asteroid off)
                 asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
                 asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
             # -= asteroid =- collides with -= rocket =- (if the rocket is fine)
