@@ -74,7 +74,7 @@ class Banners:
                 self.sound_go.play()
             self.next_game_countdown -= 1
             self.TEXT_LEVEL_RESTARTS_POS = [int((screen - banner) / 2) for screen, banner in
-                                            zip(parameters.SCREEN_SIZE, \
+                                            zip(parameters.SCREEN_SIZE,
                                             self.text_info_countdown.get_rect().bottomright)]
             alpha = int(((self.next_game_countdown / parameters.GAME_RESTARTS_IN)) * 254)
             self.text_info_countdown.set_alpha(alpha)

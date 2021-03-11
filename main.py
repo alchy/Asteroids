@@ -42,7 +42,7 @@ start_new_game = False
 # initialize asteroids
 asteroids = []
 asteroid_explosion_sound = pygame.mixer.Sound('sounds/explosions/asteroid_explodes.wav')
-asteroid_explosion_sound.set_volume(0.3)
+asteroid_explosion_sound.set_volume(0.4)
 for i in range(MAX_ASTEROIDS):
     asteroids.append(asteroid.Asteroid(screen))
 
