@@ -17,7 +17,6 @@ class Asteroid:
             self.asteroid_frames = 30
             self.asteroid_animation_frame_timer_limit = 3
             for frame in range(1, self.asteroid_frames + 1):
-                print('[i] Loading asteroids: ')
                 load_filename = 'images/asteroid_animated_gold/asteroid_animated_gold_page_' \
                                 + str('{:0>4}'.format(frame)) \
                                 + '.gif'
