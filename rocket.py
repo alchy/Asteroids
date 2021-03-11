@@ -10,7 +10,7 @@ class Rocket:
         # https://www.flaticon.com/search?search-type=icons&word=arcade+space&license=&color=&stroke=&current_section=&author_id=&pack_id=&family_id=&style_id=&category_id=
         self.rocket_image = pygame.image.load('images/space-invaders.png')
         self.rocket_mask = pygame.mask.from_surface(self.rocket_image)
-        self.rocket_blaster_sound = pygame.mixer.Sound('sounds/weapons/arcade_particle_gun_basic_low.wav')
+        self.rocket_blaster_sound = pygame.mixer.Sound('sounds/weapons/blaster_shot_general.wav')
         self.rocket_blaster_sound.set_volume(0.5)
         self.rocket_rect = self.rocket_image.get_rect()
         self.rocket_x = parameters.ROCKET_INITIAL_X
