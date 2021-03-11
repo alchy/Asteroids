@@ -10,7 +10,7 @@ class RocketExplosion:
         self.rocket_explosion_image = []
         self.rocket_destroyed = False
         self.explosion_sound = pygame.mixer.Sound('sounds/explosions/arcade_game_ship_explosion_low.wav')
-        self.explosion_sound.set_volume(1.0)
+        self.explosion_sound.set_volume(0.7)
         for frame in range(1, 13):
             print('[i] Loading explosion: ')
             load_filename = 'images/explosion_animated/rocket_explosion_page_' \
@@ -22,7 +22,6 @@ class RocketExplosion:
     def redraw(self, rocket_explosion_x, rocket_explosion_y):
         if not self.rocket_destroyed:
             if self.rocket_explosion_animation_frame == 0 and self.rocket_explosion_animation_frame_timer == 0:
-                print("explosion sound", self.rocket_destroyed, self.rocket_explosion_animation_frame)
                 self.explosion_sound.play()
             if self.rocket_explosion_animation_frame_timer > 16:
                 self.rocket_explosion_animation_frame_timer = 0
