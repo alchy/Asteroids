@@ -19,8 +19,8 @@ class Background:
         self.background = []
         self.background_width = []
         self.background_height = []
-        self.active_background = 4
-        self.next_background = 5
+        self.active_background = 0
+        self.next_background = self.active_background + 1
         for background_id in range(0, parameters.MAX_BACKGROUNDS + 1):
             self.background.append(pygame.image.load('images/level_backgrounds/background_level_' +
                                   str('{:0>3}'.format(background_id)) +
