@@ -38,6 +38,13 @@ class Banners:
         self.TEXT_LEVEL_FINAL_SCORE_POS = [int((screen - banner) / 2) for screen, banner in
                                         zip(parameters.SCREEN_SIZE, \
                                             self.text_info_final_score.get_rect().bottomright)]
+        # init banner voice
+        self.sound_ready = pygame.mixer.Sound('sounds/banners/ready.wav')
+        self.sound_ready.set_volume(0.5)
+        self.sound_set = pygame.mixer.Sound('sounds/banners/set.wav')
+        self.sound_set.set_volume(0.6)
+        self.sound_go = pygame.mixer.Sound('sounds/banners/go.wav')
+        self.sound_go.set_volume(0.7)
 
     def game_stats(self, actual_fps, game_score, game_lives):
         # draw stats
@@ -54,13 +61,16 @@ class Banners:
     def game_restarts(self):
         if self.next_game_countdown > 0:
             if self.next_game_countdown == parameters.GAME_RESTARTS_IN:
+                self.sound_ready.play()
                 self.text_info_countdown = self.game_font_extra.render("READY", False,
                                                                        parameters.GAME_RESTART_COLOR)
             if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 3) * 2:
-                self.text_info_countdown = self.game_font_extra.render("STEADY", False,
+                self.sound_set.play()
+                self.text_info_countdown = self.game_font_extra.render("SET", False,
                                                                        parameters.GAME_RESTART_COLOR)
             if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 3) * 1:
-                self.text_info_countdown = self.game_font_extra.render("GO!", False,
+                self.sound_go.play()
+                self.text_info_countdown = self.game_font_extra.render("GO", False,
                                                                        parameters.GAME_RESTART_COLOR)
             self.next_game_countdown -= 1
             self.TEXT_LEVEL_RESTARTS_POS = [int((screen - banner) / 2) for screen, banner in
