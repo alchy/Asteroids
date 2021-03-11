@@ -39,12 +39,12 @@ class Banners:
                                         zip(parameters.SCREEN_SIZE, \
                                             self.text_info_final_score.get_rect().bottomright)]
         # init banner voice
-        self.sound_ready = pygame.mixer.Sound('sounds/banners/ready.wav')
-        self.sound_ready.set_volume(0.4)
-        self.sound_set = pygame.mixer.Sound('sounds/banners/set.wav')
-        self.sound_set.set_volume(0.4)
-        self.sound_go = pygame.mixer.Sound('sounds/banners/go.wav')
-        self.sound_go.set_volume(0.4)
+        self.sound_ready = pygame.mixer.Sound('sounds/banners/robot_ready.wav')
+        self.sound_ready.set_volume(0.3)
+        self.sound_steady = pygame.mixer.Sound('sounds/banners/robot_steady.wav')
+        self.sound_steady.set_volume(0.3)
+        self.sound_go = pygame.mixer.Sound('sounds/banners/robot_go.wav')
+        self.sound_go.set_volume(0.3)
 
     def game_stats(self, actual_fps, game_score, game_lives):
         # draw stats
@@ -65,9 +65,9 @@ class Banners:
                                                                        parameters.GAME_RESTART_COLOR)
                 self.sound_ready.play()
             if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 3) * 2:
-                self.text_info_countdown = self.game_font_extra.render("SET", False,
+                self.text_info_countdown = self.game_font_extra.render("STEADY", False,
                                                                        parameters.GAME_RESTART_COLOR)
-                self.sound_set.play()
+                self.sound_steady.play()
             if self.next_game_countdown == int(parameters.GAME_RESTARTS_IN / 3) * 1:
                 self.text_info_countdown = self.game_font_extra.render("GO", False,
                                                                        parameters.GAME_RESTART_COLOR)
