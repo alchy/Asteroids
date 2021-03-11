@@ -49,9 +49,10 @@ class Background:
                                                int(self.background_scroll_in_y)))
         # pozadi v ose y dojizdi, je nutne vykreslovat zvrchu nove pozadi nebo zacatek stareho
         if self.background_scroll_in_y_amount > 0:
-            self.screen.blit(self.background[self.next_background], (int(self.background_scroll_in_x),
-                                               int(self.background_scroll_in_y) -
-                                                                       self.background_height[self.active_background]))
+            self.screen.blit(self.background[self.next_background],
+                             (int(self.background_scroll_in_x),
+                              int(self.background_scroll_in_y) -
+                              self.background_height[self.next_background]))
         # vykresli pozadi
         self.screen.blit(self.background[self.active_background], (int(self.background_scroll_in_x),
                                                                    int(self.background_scroll_in_y)))
