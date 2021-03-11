@@ -1,6 +1,7 @@
 import pygame
 import parameters
 
+
 class RocketBlast:
     def __init__(self, position_x, position_y, acceleration_x, acceleration_y):
         self.position_x = position_x
@@ -8,6 +9,7 @@ class RocketBlast:
         self.acceleration_x = acceleration_x
         self.acceleration_y = acceleration_y
         self.ttl = parameters.BLAST_TTL
+
 
 class RocketBlaster:
     def __init__(self, screen):

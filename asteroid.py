@@ -43,18 +43,19 @@ class Asteroid:
         self.asteroid_hit = False
         self.asteroid_destroyed = False
 
-    def initial_inertia(self):
+    @staticmethod
+    def initial_inertia():
         if random.randint(0, 1):
-            initial_x = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_FROM, \
+            initial_x = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_FROM,
                                        parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_TO)
         else:
-            initial_x = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_FROM, \
+            initial_x = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_FROM,
                                        parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO)
         if random.randint(0, 1):
-            initial_y = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM, \
+            initial_y = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM,
                                        parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_TO)
         else:
-            initial_y = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_FROM, \
+            initial_y = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_FROM,
                                        parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_TO)
         inertia_x = random.uniform(-1.5, +1.5)
         while inertia_x == 0.0:
@@ -62,24 +63,23 @@ class Asteroid:
         inertia_y = random.uniform(-1.5, +1.5)
         while inertia_y == 0.0:
             inertia_y = random.uniform(-1.5, +1.5)
-        return (float(initial_x), float(initial_y), \
+        return (float(initial_x), float(initial_y),
                 float(inertia_x), float(inertia_y))
 
     def recalculate_position(self):
         self.asteroid_position_x += self.asteroid_acceleration_x
         self.asteroid_position_y += self.asteroid_acceleration_y
-        if \
-                self.asteroid_position_x < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_FROM or \
-                        self.asteroid_position_x > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO or \
-                        self.asteroid_position_y < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM or \
-                        self.asteroid_position_y > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_TO:
+        if self.asteroid_position_x < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_FROM or \
+                self.asteroid_position_x > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO or \
+                self.asteroid_position_y < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM or \
+                self.asteroid_position_y > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_TO:
             if DEBUG:
                 print("Inertia reset...")
             self.asteroid_position_x, self.asteroid_position_y, \
-            self.asteroid_acceleration_x, self.asteroid_acceleration_y = self.initial_inertia()
+                self.asteroid_acceleration_x, self.asteroid_acceleration_y = self.initial_inertia()
 
     def get_collision_data(self):
-        return (self.asteroid_mask[self.asteroid_animation_frame], \
+        return (self.asteroid_mask[self.asteroid_animation_frame],
                 int(self.asteroid_position_x), int(self.asteroid_position_y))
 
     def redraw(self):
@@ -90,5 +90,5 @@ class Asteroid:
             self.asteroid_animation_frame += 1
         if self.asteroid_animation_frame > self.asteroid_frames - 1:
             self.asteroid_animation_frame = 0
-        self.screen.blit(self.asteroid_image[self.asteroid_animation_frame], \
+        self.screen.blit(self.asteroid_image[self.asteroid_animation_frame],
                          (int(self.asteroid_position_x), int(self.asteroid_position_y)))

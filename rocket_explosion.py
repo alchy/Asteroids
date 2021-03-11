@@ -2,6 +2,7 @@ import pygame
 
 MUTE_SOUND = False
 
+
 class RocketExplosion:
     def __init__(self, screen):
         self.screen = screen
@@ -33,4 +34,3 @@ class RocketExplosion:
                 self.rocket_explosion_animation_frame_timer = 0
                 self.rocket_explosion_animation_frame = 0
                 self.rocket_destroyed = True
-

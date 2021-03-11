@@ -103,7 +103,8 @@ if __name__ == "__main__":
         if not rocket.explosion:
             game_score += 1
 
-        # check for asteroids collisions (cheat, if necessary, do collision checking each even frame, redraw every frame)
+        # check for asteroids collisions
+        # cheat, if necessary, do collision checking each even frame, redraw every frame
         rocket_mask, rocket_x, rocket_y = rocket.get_collision_data_rocket()
         for asteroid in asteroids:
             asteroid.redraw()
@@ -116,7 +117,7 @@ if __name__ == "__main__":
                 asteroid.initial_inertia()
                 # hack (first explosion, then inertia or asteroid off)
                 asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
-                asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
+                    asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
             # -= asteroid =- collides with -= rocket =- (if the rocket is fine)
             if not rocket.explosion:
                 asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()

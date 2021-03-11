@@ -4,6 +4,7 @@ import parameters
 
 MUTE_SOUND = False
 
+
 class Rocket:
     def __init__(self, screen):
         self.screen = screen
@@ -83,9 +84,9 @@ class Rocket:
             # redraw rocket
             self.screen.blit(self.rocket_image, (self.rocket_x, self.rocket_y))
             # fire bullet
-            if self.blaster_triggered == True:
+            if self.blaster_triggered:
                 if not MUTE_SOUND:
                     self.rocket_blaster_sound.play()
-                self.rocket_blaster.new_blast(self.rocket_x, self.rocket_y, \
+                self.rocket_blaster.new_blast(self.rocket_x, self.rocket_y,
                                               self.rocket_acceleration_actual_x, self.rocket_acceleration_actual_y)
                 self.blaster_triggered = False
