@@ -73,8 +73,7 @@ class Asteroid:
                 self.asteroid_position_x > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO or \
                 self.asteroid_position_y < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM or \
                 self.asteroid_position_y > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_TO:
-            if DEBUG:
-                print("Inertia reset...")
+            # inertia reset
             self.asteroid_position_x, self.asteroid_position_y, \
                 self.asteroid_acceleration_x, self.asteroid_acceleration_y = self.initial_inertia()
 
