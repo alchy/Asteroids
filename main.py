@@ -43,15 +43,15 @@ start_new_game = False
 
 # initialize asteroids
 asteroids = []
-asteroid_explosion_sound = pygame.mixer.Sound('sounds/explosions/asteroid_explodes.wav')
+asteroid_explosion_sound = pygame.mixer.Sound(parameters.SOUND_FILE_ASTEROID_EXPLOSION)
 asteroid_explosion_sound.set_volume(parameters.SOUND_VOLUME_ASTEROID_EXPLOSION)
-asteroid_treasure_sound = pygame.mixer.Sound('sounds/motivation/treasure.wav')
+asteroid_treasure_sound = pygame.mixer.Sound(parameters.SOUND_FILE_TREASURE)
 asteroid_treasure_sound.set_volume(parameters.SOUND_VOLUME_TREASURE)
 for i in range(MAX_ASTEROIDS):
     asteroids.append(asteroid.Asteroid(screen))
 
 # initialize in-game music
-pygame.mixer.music.load("tracks/track_01.ogg")
+pygame.mixer.music.load(parameters.SOUND_FILE_LEVEL_MUSIC)
 pygame.mixer.music.set_volume(parameters.SOUND_VOLUME_MUSIC)
 
 # init clocks
@@ -181,8 +181,7 @@ if __name__ == "__main__":
 
         # game just run
         if game_intro < 255:
-            #game_intro_fade_surface.fill((255, 255, 255))
-            game_intro_fade_surface.fill((0, 0, 0))
+            game_intro_fade_surface.fill((0, 32, 64))
             game_intro_fade_surface.set_alpha(255 - game_intro)
             screen.blit(game_intro_fade_surface, (0, 0))
             game_intro += 1

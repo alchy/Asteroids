@@ -39,11 +39,11 @@ class Banners:
                                   self.text_info_final_score.get_rect().bottomright):
             self.TEXT_LEVEL_FINAL_SCORE_POS.append(int((screen - banner) / 2))
         # init banner voice
-        self.sound_ready = pygame.mixer.Sound('sounds/banners/robot_ready.wav')
+        self.sound_ready = pygame.mixer.Sound(parameters.SOUND_FILE_COUNTDOWN_READY)
         self.sound_ready.set_volume(parameters.SOUND_VOLUME_READY_STEADY_GO)
-        self.sound_steady = pygame.mixer.Sound('sounds/banners/robot_steady.wav')
+        self.sound_steady = pygame.mixer.Sound(parameters.SOUND_FILE_COUNTDOWN_STEADY)
         self.sound_steady.set_volume(parameters.SOUND_VOLUME_READY_STEADY_GO)
-        self.sound_go = pygame.mixer.Sound('sounds/banners/robot_go.wav')
+        self.sound_go = pygame.mixer.Sound(parameters.SOUND_FILE_COUNTDOWN_GO)
         self.sound_go.set_volume(parameters.SOUND_VOLUME_READY_STEADY_GO)
 
     def game_stats(self, actual_fps, game_score, game_lives):
