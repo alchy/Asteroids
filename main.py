@@ -50,7 +50,7 @@ for i in range(MAX_ASTEROIDS):
 
 # initialize in-game music
 pygame.mixer.music.load("tracks/track_01.ogg")
-pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.set_volume(0.2)
 
 # init clocks
 clock = pygame.time.Clock()
