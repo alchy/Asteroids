@@ -163,9 +163,9 @@ if __name__ == "__main__":
                     background_scroll_in_y = 0
 
         # swap buffers
-        if game_intro < 255 * 4:
+        if game_intro < 255:
             game_intro_fade_surface.fill((255, 255, 255))
-            game_intro_fade_surface.set_alpha(255 - int(game_intro / 4))
+            game_intro_fade_surface.set_alpha(255 - game_intro)
             screen.blit(game_intro_fade_surface, (0, 0))
             game_intro += 1
             print(game_intro)
