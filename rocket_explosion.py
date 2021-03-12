@@ -13,7 +13,6 @@ class RocketExplosion:
         self.explosion_sound = pygame.mixer.Sound('sounds/explosions/arcade_game_ship_explosion_low.wav')
         self.explosion_sound.set_volume(0.7)
         for frame in range(1, 13):
-            print('[i] Loading explosion: ')
             load_filename = 'images/explosion_animated/rocket_explosion_page_' \
                             + str('{:0>4}'.format(frame)) \
                             + '.gif'

@@ -11,9 +11,9 @@ import rocket_explosion
 DEBUG = False
 
 # initialize pygame
-print(pygame.init())
-print(pygame.font.init())
-print(pygame.mixer.get_init())
+pygame.init()
+pygame.font.init()
+pygame.mixer.get_init()
 
 # initialize screen
 flags = pygame.FULLSCREEN | pygame.SCALED | pygame.HWSURFACE
@@ -162,13 +162,14 @@ if __name__ == "__main__":
                     rocket.reset_rocket()
                     background_scroll_in_y = 0
 
-        # swap buffers
+        # game just run
         if game_intro < 255:
-            game_intro_fade_surface.fill((255, 255, 255))
+            #game_intro_fade_surface.fill((255, 255, 255))
+            game_intro_fade_surface.fill((0, 0, 0))
             game_intro_fade_surface.set_alpha(255 - game_intro)
             screen.blit(game_intro_fade_surface, (0, 0))
             game_intro += 1
-            print(game_intro)
 
+        # swap buffers
         pygame.display.update()
         clock.tick(parameters.FPS_LIMIT)
