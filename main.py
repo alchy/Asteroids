@@ -44,13 +44,13 @@ start_new_game = False
 # initialize asteroids
 asteroids = []
 asteroid_explosion_sound = pygame.mixer.Sound('sounds/explosions/asteroid_explodes.wav')
-asteroid_explosion_sound.set_volume(0.4)
+asteroid_explosion_sound.set_volume(parameters.SOUND_VOLUME_ASTEROID_EXPLOSION)
 for i in range(MAX_ASTEROIDS):
     asteroids.append(asteroid.Asteroid(screen))
 
 # initialize in-game music
 pygame.mixer.music.load("tracks/track_01.ogg")
-pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.set_volume(parameters.SOUND_VOLUME_MUSIC)
 
 # init clocks
 clock = pygame.time.Clock()
@@ -132,7 +132,7 @@ if __name__ == "__main__":
                     next_game_countdown = parameters.GAME_RESTARTS_IN
                     game_lives -= 1
                     if game_lives == 0:
-                        pygame.mixer.music.fadeout(5000)
+                        pygame.mixer.music.fadeout(parameters.GAME_MUSIC_FADEOUT)
 
         # draw explosion
         if rocket.explosion:
