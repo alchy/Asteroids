@@ -37,6 +37,8 @@ rocket_explosion.rocket_destroyed = True
 MAX_ASTEROIDS = 16
 game_score = 0
 game_lives = 0
+game_intro = 0
+game_intro_fade_surface = pygame.Surface(parameters.SCREEN_SIZE)
 start_new_game = False
 
 # initialize asteroids
@@ -161,5 +163,12 @@ if __name__ == "__main__":
                     background_scroll_in_y = 0
 
         # swap buffers
+        if game_intro < 255 * 4:
+            game_intro_fade_surface.fill((255, 255, 255))
+            game_intro_fade_surface.set_alpha(255 - int(game_intro / 4))
+            screen.blit(game_intro_fade_surface, (0, 0))
+            game_intro += 1
+            print(game_intro)
+
         pygame.display.update()
         clock.tick(parameters.FPS_LIMIT)
