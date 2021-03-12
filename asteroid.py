@@ -13,7 +13,7 @@ class Asteroid:
         self.asteroid_image = []
         self.asteroid_mask = []
 
-        if random.randint(0, 15) == 0:
+        if random.randint(0, 10) == 0:
             self.asteroid_frames = 30
             self.asteroid_animation_frame_timer_limit = 3
             for frame in range(1, self.asteroid_frames + 1):
@@ -23,6 +23,7 @@ class Asteroid:
                 asteroid_image_tmp = pygame.image.load(load_filename)
                 self.asteroid_image.append(asteroid_image_tmp)
                 self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
+                self.asteroid_treasure = True
         else:
             self.asteroid_frames = 20
             self.asteroid_animation_frame_timer_limit = 8
@@ -33,6 +34,7 @@ class Asteroid:
                 asteroid_image_tmp = pygame.image.load(load_filename)
                 self.asteroid_image.append(asteroid_image_tmp)
                 self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
+                self.asteroid_treasure = False
 
         self.asteroid_rect = self.asteroid_image[0].get_rect()
         self.asteroid_position_x, self.asteroid_position_y, \

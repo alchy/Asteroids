@@ -13,10 +13,13 @@ class Rocket:
         self.rocket_mask = pygame.mask.from_surface(self.rocket_image)
         self.rocket_blaster_sound = pygame.mixer.Sound('sounds/weapons/blaster_shot_general.wav')
         self.rocket_blaster_sound.set_volume(parameters.SOUND_VOLUME_ROCKET_BLASTER)
+        self.rocket_engine_sound = pygame.mixer.Sound('sounds/engines/thrust.wav')
+        self.rocket_engine_sound_plays = False
+        self.rocket_engine_sound_last = self.rocket_engine_sound_plays
         self.rocket_rect = self.rocket_image.get_rect()
         self.rocket_x = parameters.ROCKET_INITIAL_X
         self.rocket_y = parameters.ROCKET_INITIAL_Y
-        self.rocket_acceleration_step = 0.02
+        self.rocket_acceleration_step = 0.025
         self.rocket_acceleration_actual_x = 0.0
         self.rocket_acceleration_actual_y = 0.0
         self.rocket_acceleration_x = 0.0
@@ -83,6 +86,13 @@ class Rocket:
         if not explosion:
             # redraw rocket
             self.screen.blit(self.rocket_image, (self.rocket_x, self.rocket_y))
+            # rocket engine sound in vacuum
+            if self.rocket_engine_sound_plays != self.rocket_engine_sound_last:
+                self.rocket_engine_sound_last = self.rocket_engine_sound_plays
+                if self.rocket_engine_sound_plays:
+                    self.rocket_engine_sound.play(-1)
+                else:
+                    self.rocket_engine_sound.stop()
             # fire bullet
             if self.blaster_triggered:
                 if not MUTE_SOUND:

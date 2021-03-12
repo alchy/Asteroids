@@ -16,7 +16,7 @@ pygame.font.init()
 pygame.mixer.get_init()
 
 # initialize screen
-flags = pygame.FULLSCREEN | pygame.SCALED | pygame.HWSURFACE
+flags = 0  # pygame.FULLSCREEN | pygame.SCALED | pygame.HWSURFACE
 screen = pygame.display.set_mode(parameters.SCREEN_SIZE, flags, vsync=0)
 pygame.display.set_caption(parameters.SCREEN_CAPTION)
 
@@ -45,6 +45,8 @@ start_new_game = False
 asteroids = []
 asteroid_explosion_sound = pygame.mixer.Sound('sounds/explosions/asteroid_explodes.wav')
 asteroid_explosion_sound.set_volume(parameters.SOUND_VOLUME_ASTEROID_EXPLOSION)
+asteroid_treasure_sound = pygame.mixer.Sound('sounds/motivation/treasure.wav')
+asteroid_treasure_sound.set_volume(parameters.SOUND_VOLUME_TREASURE)
 for i in range(MAX_ASTEROIDS):
     asteroids.append(asteroid.Asteroid(screen))
 
@@ -65,12 +67,16 @@ if __name__ == "__main__":
                 running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
+                    rocket.rocket_engine_sound_plays = True
                     rocket.rocket_thrust_right = True
                 if event.key == pygame.K_LEFT:
+                    rocket.rocket_engine_sound_plays = True
                     rocket.rocket_thrust_left = True
                 if event.key == pygame.K_UP:
+                    rocket.rocket_engine_sound_plays = True
                     rocket.rocket_thrust_up = True
                 if event.key == pygame.K_DOWN:
+                    rocket.rocket_engine_sound_plays = True
                     rocket.rocket_thrust_down = True
                 if event.key == pygame.K_SPACE:
                     if game_lives:
@@ -81,12 +87,16 @@ if __name__ == "__main__":
                     running = False
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
+                    rocket.rocket_engine_sound_plays = False
                     rocket.rocket_thrust_right = False
                 if event.key == pygame.K_LEFT:
+                    rocket.rocket_engine_sound_plays = False
                     rocket.rocket_thrust_left = False
                 if event.key == pygame.K_UP:
+                    rocket.rocket_engine_sound_plays = False
                     rocket.rocket_thrust_up = False
                 if event.key == pygame.K_DOWN:
+                    rocket.rocket_engine_sound_plays = False
                     rocket.rocket_thrust_down = False
 
         # if rocket is exploding, engines produce no thrust
@@ -95,6 +105,7 @@ if __name__ == "__main__":
             rocket.rocket_thrust_left = False
             rocket.rocket_thrust_up = False
             rocket.rocket_thrust_down = False
+            rocket.rocket_engine_sound_plays = False
 
         # draw background
         background.redraw()
@@ -114,9 +125,14 @@ if __name__ == "__main__":
             # -= asteroid =- collides with -= blast =-
             if rocket.check_collision_data_blasts(asteroid_mask, asteroid_x, asteroid_y):
                 asteroid.asteroid_hit = True
-                game_score += 100
-                asteroid_explosion_sound.play()
-                asteroid.initial_inertia()
+                if asteroid.asteroid_hit:
+                    asteroid.initial_inertia()
+                    if asteroid.asteroid_treasure:
+                        game_score += 10000
+                        asteroid_treasure_sound.play()
+                    else:
+                        game_score += 100
+                        asteroid_explosion_sound.play()
                 # hack (first explosion, then inertia or asteroid off)
                 asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
                     asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
@@ -136,6 +152,7 @@ if __name__ == "__main__":
 
         # draw explosion
         if rocket.explosion:
+            rocket.rocket_engine_sound.stop()
             rocket_explosion.redraw(rocket_x, rocket_y)
 
         # print in-game stats all the time
