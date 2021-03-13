@@ -37,6 +37,23 @@ class Asteroid800Loader:
             self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
             self.asteroid_treasure = False
 
+class Asteroid802Loader:
+    def __init__(self):
+        # 800 asteroid
+        self.asteroid_frames = 30
+        self.asteroid_animation_frame_timer_limit = 3
+        self.asteroid_image = []
+        self.asteroid_mask = []
+        self.asteroid_frames = 29
+        for frame in range(1, self.asteroid_frames + 1):
+            load_filename = 'images/asteroid_animated_802/' \
+                            + str('{:0>4}'.format(frame)) \
+                            + '.png'
+            asteroid_image_tmp = pygame.image.load(load_filename)
+            self.asteroid_image.append(asteroid_image_tmp)
+            self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
+            self.asteroid_treasure = False
+
 class Asteroid:
     def __init__(self, asteroid_data, screen):
         self.screen = screen

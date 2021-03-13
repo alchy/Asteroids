@@ -50,12 +50,16 @@ asteroid_treasure_sound.set_volume(parameters.SOUND_VOLUME_TREASURE)
 
 asteroid_gold_data = asteroid.AsteroidGoldLoader()
 asteroid_800_data = asteroid.Asteroid800Loader()
+asteroid_802_data = asteroid.Asteroid802Loader()
 
 for i in range(parameters.MAX_ASTEROIDS):
-    if random.randint(0, 10) == 0:
+    asteroid_type = random.randint(0, 2)
+    if asteroid_type == 0:
         asteroids.append(asteroid.Asteroid(asteroid_gold_data, screen))
-    else:
+    if asteroid_type == 1:
         asteroids.append(asteroid.Asteroid(asteroid_800_data, screen))
+    if asteroid_type == 2:
+        asteroids.append(asteroid.Asteroid(asteroid_802_data, screen))
 
 # initialize in-game music
 pygame.mixer.music.load(parameters.SOUND_FILE_LEVEL_MUSIC)
