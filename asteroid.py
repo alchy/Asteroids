@@ -4,37 +4,50 @@ import random
 
 DEBUG = False
 
-
-class Asteroid:
-    def __init__(self, screen):
-        self.screen = screen
-        self.asteroid_animation_frame = random.randint(0, 19)
-        self.asteroid_animation_frame_timer = random.randint(0, 8)
+class AsteroidGoldLoader:
+    def __init__(self):
+        # gold asteroid
+        self.asteroid_frames = 30
+        self.asteroid_animation_frame_timer_limit = 3
         self.asteroid_image = []
         self.asteroid_mask = []
+        for frame in range(1, self.asteroid_frames + 1):
+            load_filename = 'images/asteroid_animated_gold/asteroid_animated_gold_page_' \
+                            + str('{:0>4}'.format(frame)) \
+                            + '.gif'
+            asteroid_image_tmp = pygame.image.load(load_filename)
+            self.asteroid_image.append(asteroid_image_tmp)
+            self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
+            self.asteroid_treasure = True
 
-        if random.randint(0, 10) == 0:
-            self.asteroid_frames = 30
-            self.asteroid_animation_frame_timer_limit = 3
-            for frame in range(1, self.asteroid_frames + 1):
-                load_filename = 'images/asteroid_animated_gold/asteroid_animated_gold_page_' \
-                                + str('{:0>4}'.format(frame)) \
-                                + '.gif'
-                asteroid_image_tmp = pygame.image.load(load_filename)
-                self.asteroid_image.append(asteroid_image_tmp)
-                self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
-                self.asteroid_treasure = True
-        else:
-            self.asteroid_frames = 20
-            self.asteroid_animation_frame_timer_limit = 8
-            for frame in range(1, self.asteroid_frames + 1):
-                load_filename = 'images/asteroid_animated/asteroid_animated_page_' \
-                                + str('{:0>4}'.format(frame)) \
-                                + '.gif'
-                asteroid_image_tmp = pygame.image.load(load_filename)
-                self.asteroid_image.append(asteroid_image_tmp)
-                self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
-                self.asteroid_treasure = False
+class Asteroid800Loader:
+    def __init__(self):
+        # 800 asteroid
+        self.asteroid_frames = 30
+        self.asteroid_animation_frame_timer_limit = 3
+        self.asteroid_image = []
+        self.asteroid_mask = []
+        self.asteroid_frames = 29
+        for frame in range(1, self.asteroid_frames + 1):
+            load_filename = 'images/asteroid_animated_800/' \
+                            + str('{:0>4}'.format(frame)) \
+                            + '.gif'
+            asteroid_image_tmp = pygame.image.load(load_filename)
+            self.asteroid_image.append(asteroid_image_tmp)
+            self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
+            self.asteroid_treasure = False
+
+class Asteroid:
+    def __init__(self, asteroid_data, screen):
+        self.screen = screen
+        self.asteroid_image = asteroid_data.asteroid_image
+        self.asteroid_mask = asteroid_data.asteroid_mask
+
+        self.asteroid_animation_frame = random.randint(0, 19)
+        self.asteroid_animation_frame_timer = random.randint(0, 8)
+        self.asteroid_frames = asteroid_data.asteroid_frames
+        self.asteroid_animation_frame_timer_limit = 3
+        self.asteroid_treasure = asteroid_data.asteroid_treasure
 
         self.asteroid_rect = self.asteroid_image[0].get_rect()
         self.asteroid_position_x, self.asteroid_position_y, \

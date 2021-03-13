@@ -1,5 +1,6 @@
 # Asteroids / Cement Game by MQ and Platypus
 import pygame
+import random
 import parameters
 import banners
 import background
@@ -34,7 +35,6 @@ rocket.explosion = True
 rocket_explosion = rocket_explosion.RocketExplosion(screen)
 rocket_explosion.rocket_destroyed = True
 
-MAX_ASTEROIDS = 16
 game_score = 0
 game_lives = 0
 game_intro = 0
@@ -47,8 +47,15 @@ asteroid_explosion_sound = pygame.mixer.Sound(parameters.SOUND_FILE_ASTEROID_EXP
 asteroid_explosion_sound.set_volume(parameters.SOUND_VOLUME_ASTEROID_EXPLOSION)
 asteroid_treasure_sound = pygame.mixer.Sound(parameters.SOUND_FILE_TREASURE)
 asteroid_treasure_sound.set_volume(parameters.SOUND_VOLUME_TREASURE)
-for i in range(MAX_ASTEROIDS):
-    asteroids.append(asteroid.Asteroid(screen))
+
+asteroid_gold_data = asteroid.AsteroidGoldLoader()
+asteroid_800_data = asteroid.Asteroid800Loader()
+
+for i in range(parameters.MAX_ASTEROIDS):
+    if random.randint(0, 10) == 0:
+        asteroids.append(asteroid.Asteroid(asteroid_gold_data, screen))
+    else:
+        asteroids.append(asteroid.Asteroid(asteroid_800_data, screen))
 
 # initialize in-game music
 pygame.mixer.music.load(parameters.SOUND_FILE_LEVEL_MUSIC)
