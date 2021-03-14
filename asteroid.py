@@ -11,10 +11,11 @@ class AsteroidGoldLoader:
         self.asteroid_animation_frame_timer_limit = 3
         self.asteroid_image = []
         self.asteroid_mask = []
-        for frame in range(1, self.asteroid_frames + 1):
-            load_filename = 'images/asteroid_animated_gold/asteroid_animated_gold_page_' \
+        for frame in range(0, self.asteroid_frames ):
+            load_filename = 'images/asteroid_animated_908/blender_output' \
                             + str('{:0>4}'.format(frame)) \
-                            + '.gif'
+                            + '.png'
+            print(load_filename)
             asteroid_image_tmp = pygame.image.load(load_filename)
             self.asteroid_image.append(asteroid_image_tmp)
             self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))

@@ -9,14 +9,19 @@ class Rocket:
     def __init__(self, screen):
         self.screen = screen
         # https://www.flaticon.com/search?search-type=icons&word=arcade+space&license=&color=&stroke=&current_section=&author_id=&pack_id=&family_id=&style_id=&category_id=
-        self.rocket_image = pygame.image.load('images/space-invaders.png')
-        self.rocket_mask = pygame.mask.from_surface(self.rocket_image)
+        self.rocket_direction = 'center'
+        self.rocket_image = {}
+        for (str_nr, direction) in (('0001', 'left'), ('0002', 'center'), ('0003', 'right')):
+            image_name = 'images/rockets/blender_output' + str_nr + '.png'
+            print(image_name)
+            self.rocket_image[direction] = pygame.image.load(image_name)
+        self.rocket_mask = pygame.mask.from_surface(self.rocket_image['center'])
         self.rocket_blaster_sound = pygame.mixer.Sound(parameters.SOUND_FILE_BLAST)
         self.rocket_blaster_sound.set_volume(parameters.SOUND_VOLUME_ROCKET_BLASTER)
         self.rocket_engine_sound = pygame.mixer.Sound(parameters.SOUND_FILE_THRUST)
         self.rocket_engine_sound_plays = False
         self.rocket_engine_sound_last = self.rocket_engine_sound_plays
-        self.rocket_rect = self.rocket_image.get_rect()
+        self.rocket_rect = self.rocket_image['center'].get_rect()
         self.rocket_x = parameters.ROCKET_INITIAL_X
         self.rocket_y = parameters.ROCKET_INITIAL_Y
         self.rocket_acceleration_step = 0.025
@@ -85,7 +90,7 @@ class Rocket:
         self.rocket_blaster.redraw()
         if not explosion:
             # redraw rocket
-            self.screen.blit(self.rocket_image, (self.rocket_x, self.rocket_y))
+            self.screen.blit(self.rocket_image[self.rocket_direction], (self.rocket_x, self.rocket_y))
             # rocket engine sound in vacuum
             if self.rocket_engine_sound_plays != self.rocket_engine_sound_last:
                 self.rocket_engine_sound_last = self.rocket_engine_sound_plays

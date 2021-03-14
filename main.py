@@ -80,9 +80,11 @@ if __name__ == "__main__":
                 if event.key == pygame.K_RIGHT:
                     rocket.rocket_engine_sound_plays = True
                     rocket.rocket_thrust_right = True
+                    rocket.rocket_direction = 'right'
                 if event.key == pygame.K_LEFT:
                     rocket.rocket_engine_sound_plays = True
                     rocket.rocket_thrust_left = True
+                    rocket.rocket_direction = 'left'
                 if event.key == pygame.K_UP:
                     rocket.rocket_engine_sound_plays = True
                     rocket.rocket_thrust_up = True
@@ -100,9 +102,11 @@ if __name__ == "__main__":
                 if event.key == pygame.K_RIGHT:
                     rocket.rocket_engine_sound_plays = False
                     rocket.rocket_thrust_right = False
+                    rocket.rocket_direction = 'center'
                 if event.key == pygame.K_LEFT:
                     rocket.rocket_engine_sound_plays = False
                     rocket.rocket_thrust_left = False
+                    rocket.rocket_direction = 'center'
                 if event.key == pygame.K_UP:
                     rocket.rocket_engine_sound_plays = False
                     rocket.rocket_thrust_up = False
@@ -117,6 +121,7 @@ if __name__ == "__main__":
             rocket.rocket_thrust_up = False
             rocket.rocket_thrust_down = False
             rocket.rocket_engine_sound_plays = False
+            rocket.rocket_direction = 'center'
 
         # draw background
         background.redraw()
