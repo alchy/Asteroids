@@ -32,7 +32,7 @@ class Asteroid800Loader:
         for frame in range(1, self.asteroid_frames + 1):
             load_filename = 'images/asteroid_animated_800/' \
                             + str('{:0>4}'.format(frame)) \
-                            + '.gif'
+                            + '.png'
             asteroid_image_tmp = pygame.image.load(load_filename)
             self.asteroid_image.append(asteroid_image_tmp)
             self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
