@@ -123,10 +123,10 @@ if __name__ == "__main__":
             rocket.rocket_engine_sound_plays = False
             rocket.rocket_direction = 'center'
 
-        # draw background
+        # redraw background
         background.redraw()
 
-        # update and redraw rocket position and redraw rocket (according to rocket conditions)
+        # update rocket position and redraw rocket (according to rocket conditions)
         rocket.update_position()
         rocket_mask, rocket_x, rocket_y = rocket.get_collision_data_rocket()
         rocket.redraw(rocket.explosion)
@@ -144,8 +144,8 @@ if __name__ == "__main__":
                     if asteroid.asteroid_hit:
                         asteroid.initial_inertia()
                         if asteroid.asteroid_treasure:
-                            game_score += 10000
-                            asteroid_treasure_sound.play()
+                            game_score += 1000
+                            asteroid_explosion_sound.play()
                         else:
                             game_score += 100
                             asteroid_explosion_sound.play()
@@ -167,11 +167,17 @@ if __name__ == "__main__":
                     overlap = asteroid_mask.overlap(rocket_mask, (offset_x, offset_y))
                     if overlap is not None:
                         # -= asteroid =- hit -= rocket =-
-                        rocket.explosion = True
-                        next_game_countdown = parameters.GAME_RESTARTS_IN
-                        game_lives -= 1
-                        if game_lives == 0:
-                            pygame.mixer.music.fadeout(parameters.GAME_MUSIC_FADEOUT)
+                        if asteroid.asteroid_treasure:
+                            game_score += 10000
+                            asteroid_treasure_sound.play()
+                            asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
+                            asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
+                        else:
+                            rocket.explosion = True
+                            next_game_countdown = parameters.GAME_RESTARTS_IN
+                            game_lives -= 1
+                            if game_lives == 0:
+                                pygame.mixer.music.fadeout(parameters.GAME_MUSIC_FADEOUT)
         else:
             parameters.CHECK_COLLISION_ASTEROIDS = True
 
