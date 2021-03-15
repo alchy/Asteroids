@@ -11,7 +11,7 @@ class Rocket:
         # https://www.flaticon.com/search?search-type=icons&word=arcade+space&license=&color=&stroke=&current_section=&author_id=&pack_id=&family_id=&style_id=&category_id=
         self.rocket_direction = 'center'
         self.rocket_image = {}
-        for (str_nr, direction) in (('0001', 'left'), ('0002', 'center'), ('0003', 'right')):
+        for (str_nr, direction) in (('0000', 'left'), ('0001', 'center'), ('0002', 'right')):
             image_name = 'images/rockets/blender_output' + str_nr + '.png'  # 24px in X
             print(image_name)
             self.rocket_image[direction] = pygame.image.load(image_name)
