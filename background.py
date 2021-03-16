@@ -56,6 +56,7 @@ class Background:
         # vykresli pozadi
         self.screen.blit(self.background[self.active_background], (int(self.background_scroll_in_x),
                                                                    int(self.background_scroll_in_y)))
+
         # dalsi scroll pozadi v ose x
         self.background_scroll_in_x += self.background_scroll_in_x_amount
         if abs(self.background_scroll_in_x) > self.background_width[self.active_background]:
@@ -79,5 +80,6 @@ class Background:
         for star in self.stars:
             self.stars_byteplan.set_at((int(star.x), int(star.y)), (255, 255, 255))
             star.update_position()
+
         self.screen.blit(self.stars_byteplan, (0, 0))
         self.stars_byteplan.fill((0, 0, 0))
