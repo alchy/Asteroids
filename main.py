@@ -171,7 +171,8 @@ if __name__ == "__main__":
                             game_score += 10000
                             asteroid_treasure_sound.play()
                             asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
-                            asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
+                                asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = \
+                                asteroid.initial_inertia()
                         else:
                             rocket.explosion = True
                             next_game_countdown = parameters.GAME_RESTARTS_IN
