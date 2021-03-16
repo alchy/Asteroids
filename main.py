@@ -134,8 +134,8 @@ if __name__ == "__main__":
             game_score += 1
 
         # check for asteroids collisions
-        if parameters.CHECK_COLLISION_BLASTS:
-            parameters.CHECK_COLLISION_BLASTS = False
+        if parameters.CHECK_COLLISION_ASTEROID_BLAST:
+            parameters.CHECK_COLLISION_BLAST = False
             for asteroid in asteroids:
                 asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
                 # -= asteroid =- collides with -= blast =-
@@ -153,12 +153,11 @@ if __name__ == "__main__":
                     asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
                         asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = asteroid.initial_inertia()
         else:
-            parameters.CHECK_COLLISION_BLASTS = True
+            parameters.CHECK_COLLISION_ASTEROID_BLAST = True
 
-        if parameters.CHECK_COLLISION_ASTEROIDS:
-            parameters.CHECK_COLLISION_ASTEROIDS = False
+        if parameters.CHECK_COLLISION_ASTEROID_ROCKET:
+            parameters.CHECK_COLLISION_ASTEROID_ROCKET = False
             for asteroid in asteroids:
-                asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
                 # -= asteroid =- collides with -= rocket =- (if the rocket is fine)
                 if not rocket.explosion:
                     asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
@@ -180,7 +179,29 @@ if __name__ == "__main__":
                             if game_lives == 0:
                                 pygame.mixer.music.fadeout(parameters.GAME_MUSIC_FADEOUT)
         else:
-            parameters.CHECK_COLLISION_ASTEROIDS = True
+            parameters.CHECK_COLLISION_ASTEROID_ROCKET = True
+
+
+        ### asteroid vs asteroid
+        if parameters.CHECK_COLLISION_ASTEROID_ASTEROID:
+            #parameters.CHECK_COLLISION_ASTEROID_ASTEROID = False
+            for asteroid in asteroids:
+                # -= asteroid =- collides with -= asteroid =-
+                asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
+                offset_x = rocket_x - asteroid_x
+                offset_y = rocket_y - asteroid_y
+                overlap = asteroid_mask.overlap(rocket_mask, (offset_x, offset_y))
+                if overlap is not None:
+                    # -= asteroid =- hit -= asteroid =-
+                    if asteroid.asteroid_treasure:
+                        game_score += 10000
+                        asteroid_treasure_sound.play()
+                        asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
+                            asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = \
+                            asteroid.initial_inertia()
+        else:
+            pass
+            #parameters.CHECK_COLLISION_ASTEROID_ASTEROID = True
 
         # redraw asteroids
         for asteroid in asteroids:
