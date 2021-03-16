@@ -185,20 +185,21 @@ if __name__ == "__main__":
         ### asteroid vs asteroid
         if parameters.CHECK_COLLISION_ASTEROID_ASTEROID:
             #parameters.CHECK_COLLISION_ASTEROID_ASTEROID = False
-            for asteroid in asteroids:
+            for asteroid_a in asteroids:
                 # -= asteroid =- collides with -= asteroid =-
-                asteroid_mask, asteroid_x, asteroid_y = asteroid.get_collision_data()
-                offset_x = rocket_x - asteroid_x
-                offset_y = rocket_y - asteroid_y
-                overlap = asteroid_mask.overlap(rocket_mask, (offset_x, offset_y))
-                if overlap is not None:
-                    # -= asteroid =- hit -= asteroid =-
-                    if asteroid.asteroid_treasure:
-                        game_score += 10000
-                        asteroid_treasure_sound.play()
-                        asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
-                            asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = \
-                            asteroid.initial_inertia()
+                asteroid_mask_a, asteroid_x_a, asteroid_y_a = asteroid_a.get_collision_data()
+                for asteroid_b in asteroids:
+                    if asteroid_a is not asteroid_b:
+                        asteroid_mask_b, asteroid_x_b, asteroid_y_b = asteroid_b.get_collision_data()
+                        offset_x = asteroid_x_b - asteroid_x_a
+                        offset_y = asteroid_y_b - asteroid_y_a
+                        overlap = asteroid_mask_a.overlap(asteroid_mask_b, (offset_x, offset_y))
+                        if overlap is not None:
+                            # -= asteroid =- hit -= asteroid =-
+                            asteroid_treasure_sound.play()
+                            #asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
+                            #    asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = \
+                            #    asteroid.initial_inertia()
         else:
             pass
             #parameters.CHECK_COLLISION_ASTEROID_ASTEROID = True
