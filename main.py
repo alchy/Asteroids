@@ -17,7 +17,7 @@ pygame.font.init()
 pygame.mixer.get_init()
 
 # initialize screen
-flags = pygame.FULLSCREEN | pygame.SCALED | pygame.HWSURFACE
+flags = 0  # pygame.FULLSCREEN | pygame.SCALED | pygame.HWSURFACE
 screen = pygame.display.set_mode(parameters.SCREEN_SIZE, flags, vsync=0)
 pygame.display.set_caption(parameters.SCREEN_CAPTION)
 
@@ -188,7 +188,9 @@ if __name__ == "__main__":
                 if asteroid_a.in_viewport():
                     asteroid_mask_a, asteroid_x_a, asteroid_y_a = asteroid_a.get_collision_data()
                     for asteroid_b in asteroids:
-                        if asteroid_a != asteroid_b and asteroid_a not in asteroid_b.collision_buffer:
+                        if asteroid_a != asteroid_b and \
+                                asteroid_a not in asteroid_b.collision_buffer and \
+                                asteroid_b not in asteroid_a.collision_buffer:
                             asteroid_mask_b, asteroid_x_b, asteroid_y_b = asteroid_b.get_collision_data()
                             offset_x = asteroid_x_b - asteroid_x_a
                             offset_y = asteroid_y_b - asteroid_y_a
@@ -196,7 +198,7 @@ if __name__ == "__main__":
                             if overlap is not None:
                                 # -= asteroid =- hits -= asteroid =-
                                 asteroid_a.collision_buffer.append(asteroid_b)
-
+                                asteroid_b.collision_buffer.append(asteroid_a)
                                 px = \
                                     asteroid_a.asteroid_acceleration_x * asteroid_a.mass \
                                     + asteroid_b.asteroid_acceleration_x * asteroid_b.mass
@@ -212,11 +214,21 @@ if __name__ == "__main__":
                                     px / asteroid_b.mass - asteroid_b.asteroid_acceleration_x
                                 asteroid_b.asteroid_acceleration_y = \
                                     py / asteroid_b.mass - asteroid_b.asteroid_acceleration_y
+
+                                # w/ energy conservation
+                                ec = 1
+                                asteroid_a.asteroid_acceleration_x *= ec
+                                asteroid_a.asteroid_acceleration_y *= ec
+                                asteroid_b.asteroid_acceleration_x *= ec
+                                asteroid_b.asteroid_acceleration_y *= ec
+
         else:
             parameters.CHECK_COLLISION_ASTEROID_ASTEROID = True
+            collision_buffer_clear = True
             for asteroid in asteroids:
-
-                asteroid.collision_buffer = []
+                for asteroid_in_collision in asteroid.collision_buffer:
+                    if not asteroid.in_collision(asteroid_in_collision):
+                        asteroid.collision_buffer.remove(asteroid_in_collision)
 
         # redraw asteroids
         for asteroid in asteroids:
