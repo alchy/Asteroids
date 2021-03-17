@@ -7,10 +7,11 @@ DEBUG = False
 class AsteroidGoldLoader:
     def __init__(self):
         # gold asteroid
-        self.asteroid_frames = 30
+        self.mass = 1
         self.asteroid_animation_frame_timer_limit = 3
         self.asteroid_image = []
         self.asteroid_mask = []
+        self.asteroid_frames = 30
         for frame in range(0, self.asteroid_frames ):
             load_filename = 'images/asteroid_animated_908/blender_output' \
                             + str('{:0>4}'.format(frame)) \
@@ -24,6 +25,7 @@ class AsteroidGoldLoader:
 class Asteroid800Loader:
     def __init__(self):
         # 800 asteroid
+        self.mass = 5
         self.asteroid_frames = 30
         self.asteroid_animation_frame_timer_limit = 3
         self.asteroid_image = []
@@ -40,8 +42,8 @@ class Asteroid800Loader:
 
 class Asteroid802Loader:
     def __init__(self):
-        # 800 asteroid
-        self.asteroid_frames = 30
+        # 802 asteroid
+        self.mass = 2
         self.asteroid_animation_frame_timer_limit = 3
         self.asteroid_image = []
         self.asteroid_mask = []
@@ -60,7 +62,7 @@ class Asteroid:
         self.screen = screen
         self.asteroid_image = asteroid_data.asteroid_image
         self.asteroid_mask = asteroid_data.asteroid_mask
-
+        self.collision_buffer = []
         self.asteroid_animation_frame = random.randint(0, 19)
         self.asteroid_animation_frame_timer = random.randint(0, 8)
         self.asteroid_frames = asteroid_data.asteroid_frames
@@ -74,6 +76,18 @@ class Asteroid:
         self.asteroid_rect.y = int(self.asteroid_position_y)
         self.asteroid_hit = False
         self.asteroid_destroyed = False
+
+    def in_viewport(self):
+        if self.asteroid_position_x < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_LEFT_TO:
+            return False
+        elif self.asteroid_position_x > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_FROM:
+            return False
+        elif self.asteroid_position_y < parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_TO:
+            return False
+        elif self.asteroid_position_y > parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_FROM:
+            return False
+        else:
+            return True
 
     @staticmethod
     def initial_inertia():

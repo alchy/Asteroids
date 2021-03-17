@@ -181,28 +181,31 @@ if __name__ == "__main__":
         else:
             parameters.CHECK_COLLISION_ASTEROID_ROCKET = True
 
-
         ### asteroid vs asteroid
         if parameters.CHECK_COLLISION_ASTEROID_ASTEROID:
-            #parameters.CHECK_COLLISION_ASTEROID_ASTEROID = False
+            parameters.CHECK_COLLISION_ASTEROID_ASTEROID = False
             for asteroid_a in asteroids:
-                # -= asteroid =- collides with -= asteroid =-
-                asteroid_mask_a, asteroid_x_a, asteroid_y_a = asteroid_a.get_collision_data()
-                for asteroid_b in asteroids:
-                    if asteroid_a is not asteroid_b:
-                        asteroid_mask_b, asteroid_x_b, asteroid_y_b = asteroid_b.get_collision_data()
-                        offset_x = asteroid_x_b - asteroid_x_a
-                        offset_y = asteroid_y_b - asteroid_y_a
-                        overlap = asteroid_mask_a.overlap(asteroid_mask_b, (offset_x, offset_y))
-                        if overlap is not None:
-                            # -= asteroid =- hit -= asteroid =-
-                            asteroid_treasure_sound.play()
-                            #asteroid.asteroid_position_x, asteroid.asteroid_position_y, \
-                            #    asteroid.asteroid_acceleration_x, asteroid.asteroid_acceleration_y = \
-                            #    asteroid.initial_inertia()
+                if asteroid_a.in_viewport():
+                    asteroid_mask_a, asteroid_x_a, asteroid_y_a = asteroid_a.get_collision_data()
+                    for asteroid_b in asteroids:
+                        if asteroid_a != asteroid_b and asteroid_a not in asteroid_b.collision_buffer:
+                            asteroid_mask_b, asteroid_x_b, asteroid_y_b = asteroid_b.get_collision_data()
+                            offset_x = asteroid_x_b - asteroid_x_a
+                            offset_y = asteroid_y_b - asteroid_y_a
+                            overlap = asteroid_mask_a.overlap(asteroid_mask_b, (offset_x, offset_y))
+                            if overlap is not None:
+                                # -= asteroid =- hit -= asteroid =-
+                                asteroid_a.collision_buffer.append(asteroid_b)
+                                px = asteroid_a.asteroid_acceleration_x + asteroid_b.asteroid_acceleration_x
+                                py = asteroid_a.asteroid_acceleration_y + asteroid_b.asteroid_acceleration_y
+                                asteroid_a.asteroid_acceleration_x = px - asteroid_a.asteroid_acceleration_x
+                                asteroid_a.asteroid_acceleration_y = py - asteroid_a.asteroid_acceleration_y
+                                asteroid_b.asteroid_acceleration_x = px - asteroid_b.asteroid_acceleration_x
+                                asteroid_b.asteroid_acceleration_y = py - asteroid_b.asteroid_acceleration_y
         else:
-            pass
-            #parameters.CHECK_COLLISION_ASTEROID_ASTEROID = True
+            parameters.CHECK_COLLISION_ASTEROID_ASTEROID = True
+            for asteroid in asteroids:
+                asteroid.collision_buffer = []
 
         # redraw asteroids
         for asteroid in asteroids:
