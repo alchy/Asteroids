@@ -252,10 +252,9 @@ if __name__ == "__main__":
         if game_lives == 0:
             if start_new_game:
                 if banners.game_restarts():
-                    game_lives = 0
+                    game_lives = parameters.GAME_LIVES
                     game_score = 0
                     start_new_game = False
-                    game_lives = parameters.GAME_LIVES
                     rocket.reset_rocket()
                     rocket_explosion.rocket_destroyed = False
                     background.reset()
