@@ -16,6 +16,7 @@ class Star:
 class Background:
     def __init__(self, screen):
         self.screen = screen
+        self.running = False
         self.background = []
         self.background_width = []
         self.background_height = []
@@ -40,6 +41,14 @@ class Background:
         for star in range(parameters.BACKGROUND_STARS_COUNT):
             self.stars.append(Star())
 
+    def reset(self):
+        self.active_background = 0
+        self.next_background = self.active_background + 1
+        self.background_scroll_in_x = 0
+        self.background_scroll_in_x_amount = 0  # -0.2
+        self.background_scroll_in_y = (self.background_height[self.active_background] * -1) + parameters.SCREEN_HEIGHT
+        self.background_scroll_in_y_amount = 0.2
+
     def redraw(self):
         # pozadi v ose x dojizdi, je nutne vykreslovat zprava nove pozadi nebo zacatek stareho
         if self.background_scroll_in_x_amount < 0:
@@ -56,29 +65,31 @@ class Background:
         self.screen.blit(self.background[self.active_background], (int(self.background_scroll_in_x),
                                                                    int(self.background_scroll_in_y)))
 
-        # dalsi scroll pozadi v ose x
-        self.background_scroll_in_x += self.background_scroll_in_x_amount
-        if abs(self.background_scroll_in_x) > self.background_width[self.active_background]:
-            self.background_scroll_in_x = 0
 
-        # dalsi scroll pozadi v ose y
-        self.background_scroll_in_y += self.background_scroll_in_y_amount
+        if self.running:
+            # dalsi scroll pozadi v ose x
+            self.background_scroll_in_x += self.background_scroll_in_x_amount
+            if abs(self.background_scroll_in_x) > self.background_width[self.active_background]:
+                self.background_scroll_in_x = 0
 
-        # osetreni toho, ze bude nadale jako primarni pozadi vykreslovano pozadi s id self.next_background
-        if self.background_scroll_in_y > parameters.SCREEN_HEIGHT:
-            # aktivni pozadi je dalsi pozadi
-            self.active_background = self.next_background
-            self.next_background += 1
-            if self.next_background > parameters.MAX_BACKGROUNDS:
-                # dosly pozadi, jedeme dokola
-                self.next_background = 0
-            # vyrezetuje offset vykreslovani
-            self.background_scroll_in_y = \
-                (self.background_height[self.active_background] * -1) + parameters.SCREEN_HEIGHT
+            # dalsi scroll pozadi v ose y
+            self.background_scroll_in_y += self.background_scroll_in_y_amount
 
-        for star in self.stars:
-            self.stars_byteplan.set_at((int(star.x), int(star.y)), (255, 255, 255))
-            star.update_position()
+            # osetreni toho, ze bude nadale jako primarni pozadi vykreslovano pozadi s id self.next_background
+            if self.background_scroll_in_y > parameters.SCREEN_HEIGHT:
+                # aktivni pozadi je dalsi pozadi
+                self.active_background = self.next_background
+                self.next_background += 1
+                if self.next_background > parameters.MAX_BACKGROUNDS:
+                    # dosly pozadi, jedeme dokola
+                    self.next_background = 0
+                # vyrezetuje offset vykreslovani
+                self.background_scroll_in_y = \
+                    (self.background_height[self.active_background] * -1) + parameters.SCREEN_HEIGHT
+
+            for star in self.stars:
+                self.stars_byteplan.set_at((int(star.x), int(star.y)), (255, 255, 255))
+                star.update_position()
 
         self.screen.blit(self.stars_byteplan, (0, 0))
         self.stars_byteplan.fill((0, 0, 0))

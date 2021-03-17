@@ -77,16 +77,14 @@ class Asteroid:
         self.asteroid_destroyed = False
 
     def in_collision(self, other_asteroid):
-        sd = 2  # safe margin distance after the new trajectory is computed
         offset_x_a = other_asteroid.asteroid_position_x - self.asteroid_position_x
         offset_x_b = other_asteroid.asteroid_position_x + other_asteroid.width - self.asteroid_position_x + self.width
         offset_y_a = other_asteroid.asteroid_position_y - self.asteroid_position_y
         offset_y_b = other_asteroid.asteroid_position_y + other_asteroid.width - self.asteroid_position_y + self.width
         if offset_x_a < self.width and offset_x_b > 0 and offset_y_a < self.height and offset_y_b > 0:
-            print("[d] in collision")
             return True
 
-        f = 3  # extend future frames
+        f = 3  # extend to future frames
         for f in range(1, f + 1):
             offset_x_a = other_asteroid.asteroid_position_x + (f * other_asteroid.asteroid_acceleration_x) \
                 - self.asteroid_position_x + (f * self.asteroid_acceleration_x)
@@ -97,10 +95,8 @@ class Asteroid:
             offset_y_b = other_asteroid.asteroid_position_y + (f * self.asteroid_acceleration_y) \
                          + other_asteroid.width - self.asteroid_position_y + self.width + (f * self.asteroid_acceleration_y)
             if offset_x_a < self.width and offset_x_b > 0 and offset_y_a < self.height and offset_y_b > 0:
-                print("[d] still in collision in future")
                 return True
 
-        print("[d] not in collision")
         return False
 
     def in_viewport(self):

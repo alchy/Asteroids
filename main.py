@@ -17,7 +17,7 @@ pygame.font.init()
 pygame.mixer.get_init()
 
 # initialize screen
-flags = 0  # pygame.FULLSCREEN | pygame.SCALED | pygame.HWSURFACE
+flags = pygame.FULLSCREEN | pygame.SCALED | pygame.HWSURFACE
 screen = pygame.display.set_mode(parameters.SCREEN_SIZE, flags, vsync=0)
 pygame.display.set_caption(parameters.SCREEN_CAPTION)
 
@@ -252,13 +252,17 @@ if __name__ == "__main__":
         if game_lives == 0:
             if start_new_game:
                 if banners.game_restarts():
-                    game_lives = parameters.GAME_LIVES
+                    game_lives = 0
                     game_score = 0
-                    rocket.explosion = False
-                    rocket_explosion.rocket_destroyed = False
                     start_new_game = False
+                    game_lives = parameters.GAME_LIVES
+                    rocket.reset_rocket()
+                    rocket_explosion.rocket_destroyed = False
+                    background.reset()
+                    background.running = True
                     pygame.mixer.music.play(1)
             else:
+                background.running = False
                 banners.game_your_score(game_score)
         else:
             if rocket_explosion.rocket_destroyed:
@@ -268,7 +272,7 @@ if __name__ == "__main__":
                     rocket.reset_rocket()
                     background_scroll_in_y = 0
 
-        # game just run
+        # game countdown just started
         if game_intro < 255:
             game_intro_fade_surface.fill((0, 32, 64))
             game_intro_fade_surface.set_alpha(255 - game_intro)
