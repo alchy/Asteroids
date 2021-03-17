@@ -4,6 +4,7 @@ import random
 
 DEBUG = False
 
+
 class AsteroidGoldLoader:
     def __init__(self):
         # gold asteroid
@@ -56,6 +57,26 @@ class Asteroid802Loader:
             self.asteroid_image.append(asteroid_image_tmp)
             self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
             self.asteroid_treasure = False
+
+class AsteroidLoader:
+    def __init__(self, screen):
+        self.screen = screen
+        self.asteroid_gold_data = AsteroidGoldLoader()
+        self.asteroid_800_data = Asteroid800Loader()
+        self.asteroid_802_data = Asteroid802Loader()
+        self.reset()
+
+    def reset(self):
+        asteroids = []
+        for asteroid_id in range(parameters.MAX_ASTEROIDS):
+            asteroid_type = random.randint(0, 2)
+            if asteroid_type == 0:
+                asteroids.append(Asteroid(self.asteroid_gold_data, self.screen))
+            if asteroid_type == 1:
+                asteroids.append(Asteroid(self.asteroid_800_data, self.screen))
+            if asteroid_type == 2:
+                asteroids.append(Asteroid(self.asteroid_802_data, self.screen))
+        return asteroids
 
 class Asteroid:
     def __init__(self, asteroid_data, screen):
