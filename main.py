@@ -45,6 +45,8 @@ start_new_game = False
 asteroids = []
 asteroid_explosion_sound = pygame.mixer.Sound(parameters.SOUND_FILE_ASTEROID_EXPLOSION)
 asteroid_explosion_sound.set_volume(parameters.SOUND_VOLUME_ASTEROID_EXPLOSION)
+asteroid_asteroid_clash_sound = pygame.mixer.Sound(parameters.SOUND_FILE_ASTEROID_CLASH)
+asteroid_asteroid_clash_sound.set_volume(parameters.SOUND_VOLUME_ASTEROID_CLASH)
 asteroid_treasure_sound = pygame.mixer.Sound(parameters.SOUND_FILE_TREASURE)
 asteroid_treasure_sound.set_volume(parameters.SOUND_VOLUME_TREASURE)
 
@@ -197,6 +199,7 @@ if __name__ == "__main__":
                             overlap = asteroid_mask_a.overlap(asteroid_mask_b, (offset_x, offset_y))
                             if overlap is not None:
                                 # -= asteroid =- hits -= asteroid =-
+                                asteroid_asteroid_clash_sound.play()
                                 asteroid_a.collision_buffer.append(asteroid_b)
                                 asteroid_b.collision_buffer.append(asteroid_a)
 
