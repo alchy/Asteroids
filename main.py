@@ -194,17 +194,28 @@ if __name__ == "__main__":
                             offset_y = asteroid_y_b - asteroid_y_a
                             overlap = asteroid_mask_a.overlap(asteroid_mask_b, (offset_x, offset_y))
                             if overlap is not None:
-                                # -= asteroid =- hit -= asteroid =-
+                                # -= asteroid =- hits -= asteroid =-
                                 asteroid_a.collision_buffer.append(asteroid_b)
-                                px = asteroid_a.asteroid_acceleration_x + asteroid_b.asteroid_acceleration_x
-                                py = asteroid_a.asteroid_acceleration_y + asteroid_b.asteroid_acceleration_y
-                                asteroid_a.asteroid_acceleration_x = px - asteroid_a.asteroid_acceleration_x
-                                asteroid_a.asteroid_acceleration_y = py - asteroid_a.asteroid_acceleration_y
-                                asteroid_b.asteroid_acceleration_x = px - asteroid_b.asteroid_acceleration_x
-                                asteroid_b.asteroid_acceleration_y = py - asteroid_b.asteroid_acceleration_y
+
+                                px = \
+                                    asteroid_a.asteroid_acceleration_x * asteroid_a.mass \
+                                    + asteroid_b.asteroid_acceleration_x * asteroid_b.mass
+                                py = \
+                                    asteroid_a.asteroid_acceleration_y * asteroid_a.mass \
+                                    + asteroid_b.asteroid_acceleration_y * asteroid_b.mass
+
+                                asteroid_a.asteroid_acceleration_x = \
+                                    px / asteroid_a.mass - asteroid_a.asteroid_acceleration_x
+                                asteroid_a.asteroid_acceleration_y = \
+                                    py / asteroid_a.mass - asteroid_a.asteroid_acceleration_y
+                                asteroid_b.asteroid_acceleration_x = \
+                                    px / asteroid_b.mass - asteroid_b.asteroid_acceleration_x
+                                asteroid_b.asteroid_acceleration_y = \
+                                    py / asteroid_b.mass - asteroid_b.asteroid_acceleration_y
         else:
             parameters.CHECK_COLLISION_ASTEROID_ASTEROID = True
             for asteroid in asteroids:
+
                 asteroid.collision_buffer = []
 
         # redraw asteroids

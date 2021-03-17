@@ -68,12 +68,9 @@ class Asteroid:
         self.asteroid_frames = asteroid_data.asteroid_frames
         self.asteroid_animation_frame_timer_limit = 3
         self.asteroid_treasure = asteroid_data.asteroid_treasure
-
-        self.asteroid_rect = self.asteroid_image[0].get_rect()
         self.asteroid_position_x, self.asteroid_position_y, \
             self.asteroid_acceleration_x, self.asteroid_acceleration_y = self.initial_inertia()
-        self.asteroid_rect.x = int(self.asteroid_position_x)
-        self.asteroid_rect.y = int(self.asteroid_position_y)
+        self.mass = asteroid_data.mass
         self.asteroid_hit = False
         self.asteroid_destroyed = False
 
