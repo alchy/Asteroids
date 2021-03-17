@@ -199,6 +199,7 @@ if __name__ == "__main__":
                                 # -= asteroid =- hits -= asteroid =-
                                 asteroid_a.collision_buffer.append(asteroid_b)
                                 asteroid_b.collision_buffer.append(asteroid_a)
+
                                 px = \
                                     asteroid_a.asteroid_acceleration_x * asteroid_a.mass \
                                     + asteroid_b.asteroid_acceleration_x * asteroid_b.mass
@@ -207,13 +208,13 @@ if __name__ == "__main__":
                                     + asteroid_b.asteroid_acceleration_y * asteroid_b.mass
 
                                 asteroid_a.asteroid_acceleration_x = \
-                                    px / asteroid_a.mass - asteroid_a.asteroid_acceleration_x
+                                    px / (asteroid_a.mass + asteroid_b.mass) - asteroid_a.asteroid_acceleration_x
                                 asteroid_a.asteroid_acceleration_y = \
-                                    py / asteroid_a.mass - asteroid_a.asteroid_acceleration_y
+                                    py / (asteroid_a.mass + asteroid_b.mass) - asteroid_a.asteroid_acceleration_y
                                 asteroid_b.asteroid_acceleration_x = \
-                                    px / asteroid_b.mass - asteroid_b.asteroid_acceleration_x
+                                    px / (asteroid_a.mass + asteroid_b.mass) - asteroid_b.asteroid_acceleration_x
                                 asteroid_b.asteroid_acceleration_y = \
-                                    py / asteroid_b.mass - asteroid_b.asteroid_acceleration_y
+                                    py / (asteroid_a.mass + asteroid_b.mass) - asteroid_b.asteroid_acceleration_y
 
                                 # w/ energy conservation
                                 ec = 1
@@ -229,6 +230,7 @@ if __name__ == "__main__":
                 for asteroid_in_collision in asteroid.collision_buffer:
                     if not asteroid.in_collision(asteroid_in_collision):
                         asteroid.collision_buffer.remove(asteroid_in_collision)
+                        asteroid_in_collision.collision_buffer.remove(asteroid)
 
         # redraw asteroids
         for asteroid in asteroids:
