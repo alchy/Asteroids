@@ -64,11 +64,10 @@ class AsteroidLoader:
         self.asteroid_gold_data = AsteroidGoldLoader()
         self.asteroid_800_data = Asteroid800Loader()
         self.asteroid_802_data = Asteroid802Loader()
-        self.reset()
 
-    def reset(self):
+    def reset(self, count_of_asteroids):
         asteroids = []
-        for asteroid_id in range(parameters.MAX_ASTEROIDS):
+        for asteroid_id in range(count_of_asteroids):
             asteroid_type = random.randint(0, 2)
             if asteroid_type == 0:
                 asteroids.append(Asteroid(self.asteroid_gold_data, self.screen))

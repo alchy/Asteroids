@@ -43,7 +43,7 @@ start_new_game = False
 
 # initialize asteroids
 asteroid_loader = asteroid.AsteroidLoader(screen)
-asteroids = asteroid_loader.reset()
+asteroids = asteroid_loader.reset(parameters.MAX_ASTEROIDS)
 asteroid_explosion_sound = pygame.mixer.Sound(parameters.SOUND_FILE_ASTEROID_EXPLOSION)
 asteroid_explosion_sound.set_volume(parameters.SOUND_VOLUME_ASTEROID_EXPLOSION)
 asteroid_asteroid_clash_sound = pygame.mixer.Sound(parameters.SOUND_FILE_ASTEROID_CLASH)
@@ -247,7 +247,7 @@ if __name__ == "__main__":
                     start_new_game = False
                     rocket.reset_rocket()
                     rocket_explosion.rocket_destroyed = False
-                    asteroids = asteroid_loader.reset()
+                    asteroids = asteroid_loader.reset(parameters.MAX_ASTEROIDS)
                     background.reset()
                     background.running = True
                     pygame.mixer.music.play(1)
