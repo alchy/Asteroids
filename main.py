@@ -234,7 +234,7 @@ if __name__ == "__main__":
             rocket.rocket_engine_sound.stop()
             rocket_explosion.redraw(rocket_x, rocket_y)
 
-        # handle game restarts
+        # handles game restart
         if game_lives == 0:
             if start_new_game:
                 game_on_hold = True
