@@ -54,8 +54,10 @@ SOUND_VOLUME_ASTEROID_CLASH = 0.7
 SOUND_FILE_BLAST = 'sounds/weapons/laser_blast.wav'
 SOUND_VOLUME_ROCKET_BLASTER = 0.2
 
-SOUND_FILE_LEVEL_MUSIC = 'tracks/track_01.ogg'
-SOUND_VOLUME_MUSIC = 0  # 0.4
+
+SOUND_FILE_INTRO_MUSIC = 'tracks/track_01.ogg'
+SOUND_FILE_LEVEL_MUSIC = 'tracks/track_02.ogg'
+SOUND_VOLUME_MUSIC = 0.7  # 0.4
 GAME_MUSIC_FADEOUT = 4000
 
 SOUND_FILE_ASTEROID_EXPLOSION = 'sounds/explosions/asteroid_explodes.wav'
@@ -72,4 +74,5 @@ SOUND_VOLUME_TREASURE = 0.9
 SOUND_FILE_THRUST = 'sounds/engines/thrust.wav'
 SOUND_VOLUME_ROCKET_ENGINE = 1
 
+SOUND_FILE_ROCKET_EXPLOSION = 'sounds/explosions/ship_explodes.wav'
 SOUND_VOLUME_ROCKET_EXPLOSION = 1

@@ -11,7 +11,7 @@ class RocketExplosion:
         self.rocket_explosion_animation_frame = 0
         self.rocket_explosion_image = []
         self.rocket_destroyed = False
-        self.explosion_sound = pygame.mixer.Sound('sounds/explosions/ship_explodes.wav')
+        self.explosion_sound = pygame.mixer.Sound(parameters.SOUND_FILE_ROCKET_EXPLOSION)
         self.explosion_sound.set_volume(parameters.SOUND_VOLUME_ROCKET_EXPLOSION)
         for frame in range(1, 13):
             load_filename = 'images/explosion_animated/rocket_explosion_page_' \
