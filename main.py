@@ -251,7 +251,6 @@ if __name__ == "__main__":
                     rocket.reset_rocket()
                     background.running = True
                     pygame.mixer.music.play(1)
-                    game_on_hold = False
             else:
                 background.running = False
                 banners.game_your_score(game_score)
