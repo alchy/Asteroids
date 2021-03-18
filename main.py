@@ -87,6 +87,7 @@ if __name__ == "__main__":
                         rocket.blaster_triggered = True
                     else:
                         start_new_game = True
+                        background.fader_trigger = True
                 if event.key == pygame.K_ESCAPE:
                     running = False
             elif event.type == pygame.KEYUP:
@@ -238,6 +239,7 @@ if __name__ == "__main__":
         if game_lives == 0:
             if start_new_game:
                 game_on_hold = True
+                background.reset()
                 background.redraw()
                 if banners.game_restarts():
                     start_new_game = False
@@ -247,8 +249,6 @@ if __name__ == "__main__":
                     asteroids = asteroid_loader.reset(parameters.MAX_ASTEROIDS)
                     rocket_explosion.rocket_destroyed = False
                     rocket.reset_rocket()
-                    background.reset()
-                    background.fader_trigger = True
                     background.running = True
                     pygame.mixer.music.play(1)
                     game_on_hold = False
