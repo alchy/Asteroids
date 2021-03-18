@@ -1,6 +1,5 @@
 # Asteroids / Cement Game by MQ and Platypus
 import pygame
-import random
 import parameters
 import banners
 import background
@@ -50,8 +49,6 @@ asteroid_asteroid_clash_sound = pygame.mixer.Sound(parameters.SOUND_FILE_ASTEROI
 asteroid_asteroid_clash_sound.set_volume(parameters.SOUND_VOLUME_ASTEROID_CLASH)
 asteroid_treasure_sound = pygame.mixer.Sound(parameters.SOUND_FILE_TREASURE)
 asteroid_treasure_sound.set_volume(parameters.SOUND_VOLUME_TREASURE)
-
-
 
 # initialize in-game music
 pygame.mixer.music.load(parameters.SOUND_FILE_LEVEL_MUSIC)
@@ -173,7 +170,7 @@ if __name__ == "__main__":
         else:
             parameters.CHECK_COLLISION_ASTEROID_ROCKET = True
 
-        ### asteroid vs asteroid
+        # asteroid vs asteroid
         if parameters.CHECK_COLLISION_ASTEROID_ASTEROID:
             parameters.CHECK_COLLISION_ASTEROID_ASTEROID = False
             for asteroid_a in asteroids:

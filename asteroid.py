@@ -13,7 +13,7 @@ class AsteroidGoldLoader:
         self.asteroid_image = []
         self.asteroid_mask = []
         self.asteroid_frames = 30
-        for frame in range(0, self.asteroid_frames ):
+        for frame in range(0, self.asteroid_frames):
             load_filename = 'images/asteroid_animated_908/blender_output' \
                             + str('{:0>4}'.format(frame)) \
                             + '.png'
@@ -22,6 +22,7 @@ class AsteroidGoldLoader:
             self.asteroid_image.append(asteroid_image_tmp)
             self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
             self.asteroid_treasure = True
+
 
 class Asteroid800Loader:
     def __init__(self):
@@ -41,6 +42,7 @@ class Asteroid800Loader:
             self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
             self.asteroid_treasure = False
 
+
 class Asteroid802Loader:
     def __init__(self):
         # 802 asteroid
@@ -57,6 +59,7 @@ class Asteroid802Loader:
             self.asteroid_image.append(asteroid_image_tmp)
             self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
             self.asteroid_treasure = False
+
 
 class AsteroidLoader:
     def __init__(self, screen):
@@ -76,6 +79,7 @@ class AsteroidLoader:
             if asteroid_type == 2:
                 asteroids.append(Asteroid(self.asteroid_802_data, self.screen))
         return asteroids
+
 
 class Asteroid:
     def __init__(self, asteroid_data, screen):
@@ -108,7 +112,7 @@ class Asteroid:
         for f in range(1, f + 1):
             offset_x_a = other_asteroid.asteroid_position_x + (f * other_asteroid.asteroid_acceleration_x) \
                 - self.asteroid_position_x + (f * self.asteroid_acceleration_x)
-            offset_x_b = other_asteroid.asteroid_position_x +(f * self.asteroid_acceleration_x) \
+            offset_x_b = other_asteroid.asteroid_position_x + (f * self.asteroid_acceleration_x) \
                          + other_asteroid.width - self.asteroid_position_x + self.width + (f * self.asteroid_acceleration_x)
             offset_y_a = other_asteroid.asteroid_position_y + (f * self.asteroid_acceleration_y) \
                          - self.asteroid_position_y + (f * self.asteroid_acceleration_y)
