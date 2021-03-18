@@ -19,6 +19,11 @@ class Background:
     def __init__(self, screen):
         self.screen = screen
         self.running = False
+        self.fader_trigger = False
+        self.fader_running = False
+        self.fader_counter = 0
+        self.fader_surface = pygame.Surface(parameters.SCREEN_SIZE)
+        self.fader_surface.fill((0, 32, 64))
         self.background = []
         self.background_width = []
         self.background_height = []
@@ -50,6 +55,19 @@ class Background:
         self.background_scroll_in_x_amount = 0  # -0.2
         self.background_scroll_in_y = (self.background_height[self.active_background] * -1) + parameters.SCREEN_HEIGHT
         self.background_scroll_in_y_amount = 0.2
+
+    def fader(self):
+        # game countdown just started
+        if self.fader_trigger:
+            self.fader_trigger = False
+            self.fader_running = True
+            self.fader_counter = 0
+        if self.fader_running and self.fader_counter < 255:
+            self.fader_surface.set_alpha(255 - self.fader_counter)
+            self.screen.blit(self.fader_surface, (0, 0))
+            self.fader_counter += 1
+            if self.fader_counter == 255:
+                self.fader_running = False
 
     def redraw(self):
         # pozadi v ose x dojizdi, je nutne vykreslovat zprava nove pozadi nebo zacatek stareho

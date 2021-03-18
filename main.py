@@ -37,7 +37,6 @@ rocket_explosion.rocket_destroyed = True
 game_score = 0
 game_lives = 0
 game_intro = 0
-game_intro_fade_surface = pygame.Surface(parameters.SCREEN_SIZE)
 start_new_game = False
 
 # initialize asteroids
@@ -242,9 +241,9 @@ if __name__ == "__main__":
                     game_lives = parameters.GAME_LIVES
                     game_score = 0
                     start_new_game = False
-                    rocket.reset_rocket()
-                    rocket_explosion.rocket_destroyed = False
                     asteroids = asteroid_loader.reset(parameters.MAX_ASTEROIDS)
+                    rocket_explosion.rocket_destroyed = False
+                    rocket.reset_rocket()
                     background.reset()
                     background.running = True
                     pygame.mixer.music.play(1)
@@ -259,12 +258,8 @@ if __name__ == "__main__":
                     rocket.reset_rocket()
                     background_scroll_in_y = 0
 
-        # game countdown just started
-        if game_intro < 255:
-            game_intro_fade_surface.fill((0, 32, 64))
-            game_intro_fade_surface.set_alpha(255 - game_intro)
-            screen.blit(game_intro_fade_surface, (0, 0))
-            game_intro += 1
+        # run fader
+        background.fader()
 
         # swap buffers
         pygame.display.update()
