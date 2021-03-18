@@ -250,7 +250,7 @@ if __name__ == "__main__":
                     rocket_explosion.rocket_destroyed = False
                     rocket.reset_rocket()
                     background.running = True
-                    #pygame.mixer.music.play(1)
+                    pygame.mixer.music.play(1)
             else:
                 background.running = False
                 banners.game_your_score(game_score)
