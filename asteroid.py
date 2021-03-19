@@ -33,7 +33,7 @@ class Asteroid800Loader:
         self.asteroid_image = []
         self.asteroid_mask = []
         self.asteroid_frames = 29
-        for frame in range(1, self.asteroid_frames + 1):
+        for frame in range(0, self.asteroid_frames + 1):
             load_filename = 'images/asteroid_animated_800/' \
                             + str('{:0>4}'.format(frame)) \
                             + '.png'
@@ -51,7 +51,7 @@ class Asteroid802Loader:
         self.asteroid_image = []
         self.asteroid_mask = []
         self.asteroid_frames = 29
-        for frame in range(1, self.asteroid_frames + 1):
+        for frame in range(0, self.asteroid_frames + 1):
             load_filename = 'images/asteroid_animated_802/' \
                             + str('{:0>4}'.format(frame)) \
                             + '.png'
@@ -61,23 +61,43 @@ class Asteroid802Loader:
             self.asteroid_treasure = False
 
 
+class AsteroidLavaBig:
+    def __init__(self):
+        # 802 asteroid
+        self.mass = 2
+        self.asteroid_animation_frame_timer_limit = 2
+        self.asteroid_image = []
+        self.asteroid_mask = []
+        self.asteroid_frames = 36
+        for frame in range(1, self.asteroid_frames + 1):
+            load_filename = 'images/asteroid_lava_big/' \
+                            + str('{:0>4}'.format(frame)) \
+                            + '.png'
+            asteroid_image_tmp = pygame.image.load(load_filename)
+            self.asteroid_image.append(asteroid_image_tmp)
+            self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
+            self.asteroid_treasure = False
+
 class AsteroidLoader:
     def __init__(self, screen):
         self.screen = screen
         self.asteroid_gold_data = AsteroidGoldLoader()
         self.asteroid_800_data = Asteroid800Loader()
         self.asteroid_802_data = Asteroid802Loader()
+        self.asteroid_lava_big = AsteroidLavaBig()
 
     def reset(self, count_of_asteroids):
         asteroids = []
         for asteroid_id in range(count_of_asteroids):
-            asteroid_type = random.randint(0, 2)
+            asteroid_type = random.randint(0, 3)
             if asteroid_type == 0:
                 asteroids.append(Asteroid(self.asteroid_gold_data, self.screen))
             if asteroid_type == 1:
                 asteroids.append(Asteroid(self.asteroid_800_data, self.screen))
             if asteroid_type == 2:
                 asteroids.append(Asteroid(self.asteroid_802_data, self.screen))
+            if asteroid_type == 3:
+                asteroids.append(Asteroid(self.asteroid_lava_big, self.screen))
         return asteroids
 
 
