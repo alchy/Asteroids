@@ -24,7 +24,7 @@ class Rocket:
         self.rocket_rect = self.rocket_image['center'].get_rect()
         self.rocket_x = parameters.ROCKET_INITIAL_X
         self.rocket_y = parameters.ROCKET_INITIAL_Y
-        self.rocket_acceleration_step = 0.025
+        self.rocket_acceleration_step = 0.05
         self.rocket_acceleration_actual_x = 0.0
         self.rocket_acceleration_actual_y = 0.0
         self.rocket_acceleration_x = 0.0

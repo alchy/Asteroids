@@ -65,7 +65,7 @@ class AsteroidLavaBig:
     def __init__(self):
         # 802 asteroid
         self.mass = 2
-        self.asteroid_animation_frame_timer_limit = 2
+        self.asteroid_animation_frame_timer_limit = 1
         self.asteroid_image = []
         self.asteroid_mask = []
         self.asteroid_frames = 36
@@ -77,6 +77,7 @@ class AsteroidLavaBig:
             self.asteroid_image.append(asteroid_image_tmp)
             self.asteroid_mask.append(pygame.mask.from_surface(asteroid_image_tmp))
             self.asteroid_treasure = False
+
 
 class AsteroidLoader:
     def __init__(self, screen):
@@ -163,18 +164,20 @@ class Asteroid:
         else:
             initial_x = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_FROM,
                                        parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_RIGHT_TO)
+
         if random.randint(0, 1):
             initial_y = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_FROM,
                                        parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_TOP_TO)
         else:
             initial_y = random.randint(parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_FROM,
                                        parameters.VIRTUAL_SCREEN_RESPAWN_STRIP_BOTTOM_TO)
-        inertia_x = random.uniform(-1.5, +1.5)
+
+        inertia_x = random.uniform(-2.5, +2.5)
         while inertia_x == 0.0:
-            inertia_x = random.uniform(-1.5, +1.5)
-        inertia_y = random.uniform(-1.5, +1.5)
+            inertia_x = random.uniform(-2.5, +2.5)
+        inertia_y = random.uniform(-2.5, +2.5)
         while inertia_y == 0.0:
-            inertia_y = random.uniform(-1.5, +1.5)
+            inertia_y = random.uniform(-2.5, +2.5)
         return (float(initial_x), float(initial_y),
                 float(inertia_x), float(inertia_y))
 
