@@ -12,5 +12,4 @@ Main purpose of the project is to learn PyGame library and check what could be d
 <br />
 ![alt text](https://github.com/alchy/Asteroids/blob/master/images/screenshots/ingame_2.jpg)
 <br />
-$ python -m nuitka --follow-imports main.py<br />
 
